@@ -10,7 +10,7 @@ const About = () => {
   console.log(data?.ping)
   console.log(data, loading)
   return (
-    <div className='text-2xl'>About</div>
+    <div className='text-2xl bg-ui-orange-600'>About</div>
   )
 }
 

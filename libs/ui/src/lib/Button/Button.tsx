@@ -1,12 +1,5 @@
-/* eslint-disable-next-line */
-export interface ButtonProps {}
+'use client'
 
-export function Button(props: ButtonProps) {
-  return (
-    <div>
-      <h1 className="">Welcome to Button!</h1>
-    </div>
-  );
-}
+import { Button } from "@mantine/core"
 
-export default Button;
+export default Button

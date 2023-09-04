@@ -1,6 +1,7 @@
 import { ApolloWrapper, getClient } from '@nx-nextjs-tailwind-storybook/feature'
 import './styles.css'
 import { PingDocument } from '@nx-nextjs-tailwind-storybook/data-access'
+import MantineProviderWrapper from 'libs/feature/src/lib/MantineProvider';
 
 export const metadata = {
   title: 'Create Next App',
@@ -19,7 +20,11 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          <MantineProviderWrapper>
+            {children}
+          </MantineProviderWrapper>
+        </ApolloWrapper>
       </body>
     </html>
   )
