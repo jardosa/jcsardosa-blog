@@ -1,8 +1,16 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
+
 // tailwind-workspace-preset.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['gitlab-sans', ...defaultTheme.fontFamily.sans,],
+        'serif': [...defaultTheme.fontFamily.serif,],
+        'mono': ['gitlab-mono', ...defaultTheme.fontFamily.mono,]
+      },
       colors: {
         'brand': {
           charcoal: '#171321',
@@ -247,7 +255,14 @@ module.exports = {
             950: '#133A03',
           }
         },
-      }
+      },
+      textColor: {
+        'gl-grey': {
+          'primary': '#333238',
+          'secondary': '#737278',
+          'tertiary': '#89888D'
+        }
+      },
     },
   },
   variants: {

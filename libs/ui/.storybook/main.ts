@@ -5,7 +5,7 @@ const config: StorybookConfig = {
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
   ],
-  addons: ['@storybook/addon-essentials', '@nx/react/plugins/storybook'],
+  addons: ['@storybook/addon-essentials', '@nx/react/plugins/storybook', '@storybook/addon-interactions'],
   webpackFinal: async (config) => {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
 

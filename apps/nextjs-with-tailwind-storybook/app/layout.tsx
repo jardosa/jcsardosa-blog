@@ -19,7 +19,7 @@ export default async function RootLayout({
   console.log({ data })
   return (
     <html lang={params.lang}>
-      <body>
+      <body className='font-sans'>
         <ApolloWrapper>
           <MantineProviderWrapper>
             {children}
