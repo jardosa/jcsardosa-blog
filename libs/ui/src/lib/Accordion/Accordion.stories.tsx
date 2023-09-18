@@ -17,6 +17,13 @@ export const Primary: Story = {
     expanded: true,
     label: 'Use an accordion when:'
   },
+  decorators: [
+    (Story) => (
+      <div className='max-w-[420px] p-5'>
+        <Story/>
+      </div>
+    )
+  ]
 };
 
 export const Heading: Story = {
