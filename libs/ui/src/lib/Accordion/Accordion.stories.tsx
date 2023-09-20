@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Accordion from './Accordion';
 
 import { userEvent, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
 
 const meta: Meta<typeof Accordion> = {
   component: Accordion,
