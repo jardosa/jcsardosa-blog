@@ -40,14 +40,15 @@ export type AlertProps = VariantProps<typeof alertstyle> & {
   title?: string
   text?: string
   isDismissible?: boolean
-  hasActions?: boolean
   variant: "success" | "info" | "warning" | "danger" | "tip"
   onDismiss: () => void
+  primaryAction?: () => void
+  secondaryAction?: () => void
 }
 
 
 
-const Alert: React.FC<AlertProps> = ({ variant, title, text, isDismissible, onDismiss }) => {
+const Alert: React.FC<AlertProps> = ({ variant, title, text, isDismissible, onDismiss, primaryAction, secondaryAction }) => {
 
   const icon = useMemo(() => {
     switch (variant) {
@@ -66,7 +67,8 @@ const Alert: React.FC<AlertProps> = ({ variant, title, text, isDismissible, onDi
         <div className="text-xl font-semibold">{title}</div>
         <div className="text-sm">{text}</div>
         <div>
-          <div></div>
+          {primaryAction && <button></button>}
+          {secondaryAction && <button></button>}
         </div>
       </div>
       {isDismissible && <XMarkIcon onClick={onDismiss} role="button" className="w-5 h-5 text-neutral-500" />}

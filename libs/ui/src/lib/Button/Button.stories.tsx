@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import Button, { ButtonProps } from './Button';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
@@ -7,12 +7,27 @@ import { expect } from '@storybook/jest';
 const meta: Meta<typeof Button> = {
   component: Button,
   title: 'Button',
+  argTypes: {
+    intent: {
+      options: ['confirm', 'danger', 'default'] as Array<ButtonProps['intent']>,
+      control: { type: 'radio' },
+
+    },
+    category: {
+      options: ['primary', 'secondary', 'tertiary'] as Array<ButtonProps['category']>,
+      control: { type: 'radio' },
+    },
+    size: {
+      options: ['SM', 'MD'] as Array<ButtonProps['size']>,
+      control: { type: 'radio' },
+    }
+  }
 };
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary = {
-  args: {},
+export const Primary: Story = {
+  args: { intent: 'default', category: 'primary', size: 'MD' },
 };
 
 export const Heading: Story = {
