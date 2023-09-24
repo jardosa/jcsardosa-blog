@@ -20,6 +20,14 @@ const meta: Meta<typeof Button> = {
     size: {
       options: ['SM', 'MD'] as Array<ButtonProps['size']>,
       control: { type: 'radio' },
+    },
+    disabled: {
+      options: [true, false],
+      control: { type: 'radio' }
+    },
+    outlineType: {
+      options: ['normal', 'dashed'],
+      control: { type: 'radio' }
     }
   }
 };
@@ -27,7 +35,7 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
-  args: { intent: 'default', category: 'primary', size: 'MD' },
+  args: { intent: 'default', category: 'primary', size: 'MD', children: 'Base Button' },
 };
 
 export const Heading: Story = {
