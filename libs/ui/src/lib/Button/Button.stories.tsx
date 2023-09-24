@@ -28,7 +28,10 @@ const meta: Meta<typeof Button> = {
     outlineType: {
       options: ['normal', 'dashed'],
       control: { type: 'radio' },
-      if: { arg: 'intent', eq: 'default' }
+    },
+    loading: {
+      options: [true, false],
+      control: { type: 'radio' }
     }
   }
 };

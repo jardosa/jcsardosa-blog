@@ -9,6 +9,30 @@ export function cn(...inputs: CxOptions) {
   return twMerge(cx(inputs));
 }
 
+const loadingButton = cva([
+  "flex items-start flex-start gap-1 rounded-[4px] transition-all text-sm text-neutral-500 outline ",
+], {
+  variants: {
+    size: {
+      MD: ['p-2'],
+      SM: ['p-1'],
+    },
+    loading: {
+      true: ['bg-white'],
+    },
+    category: {
+      primary: ['outline-1 outline-neutral-100 bg-neutral-10'],
+      secondary: ['outline-1 outline-neutral-100 bg-neutral-10'],
+      tertiary: ['outline-none', "bg-white", "text-neutral-400"],
+    }
+  },
+  defaultVariants: {
+    category: 'primary',
+    loading: true,
+    size: 'MD'
+  }
+})
+
 const button = cva([
   "flex items-start rounded-[4px] transition-all text-sm",
   "outline outline-1",
@@ -144,12 +168,31 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof button> {
   disabled?: boolean
+  loading?: boolean
 }
 
 
 
-const BaseButton = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, category, size, outlineType, className, children, ...props }, ref) => {
-  return <button ref={ref} className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }))} {...props}>{children}</button>
+const BaseButton = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, category, size, outlineType, className, children, loading, ...props }, ref) => {
+
+  if (loading) {
+    return <button disabled className={cn(loadingButton({ size, category, loading, className }))}>
+      {loading && <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white animate-spin" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" fill="#DCDCDE" />
+        <path d="M16 8C16 3.58172 12.4183 0 8 0V2C11.3137 2 14 4.68629 14 8H16Z" fill="#535158" />
+      </svg>}
+      <div>{loading ? "Loading" : children}</div>
+    </button>
+  }
+
+  return (
+    <button
+      ref={ref}
+      className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }))}
+      {...props}>
+      {children}
+    </button>
+  )
 })
 
 export default BaseButton
