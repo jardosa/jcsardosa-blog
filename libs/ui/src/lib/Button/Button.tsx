@@ -25,7 +25,7 @@ const button = cva([
     category: {
       primary: ["text-white"],
       secondary: ['bg-white'],
-      tertiary: ['outline-none', "bg-white"],
+      tertiary: ['!outline-none', "bg-white"],
     },
     size: {
       MD: ['p-2'],
@@ -33,7 +33,7 @@ const button = cva([
     },
     outlineType: {
       normal: 'hover:outline-2 focus:outline-2 active:outline-2',
-      dashed: 'outline-dashed !outline-neutral-400 active:!outline-neutral-600'
+      dashed: 'outline-dashed outline-neutral-400 active:outline-neutral-600'
     },
     disabled: {
       true: [],
@@ -46,9 +46,9 @@ const button = cva([
       category: 'primary',
       className: [
         "text-neutral-900 outline-neutral-200",
-        " hover:outline-neutral-400 hover:bg-neutral-50",
-        " focus:outline-neutral-400 focus:bg-neutral-50",
-        " active:outline-neutral-600 active:bg-neutral-100"
+        "hover:outline-neutral-400 hover:bg-neutral-50",
+        "focus:outline-neutral-400 focus:bg-neutral-50",
+        "active:outline-neutral-600 active:bg-neutral-100"
       ],
     },
     {
@@ -121,10 +121,10 @@ const button = cva([
       ]
     },
     {
-      disabled: true,
       intent: 'default',
       category: 'primary',
-      className: ''
+      outlineType: 'dashed',
+      className: 'outline-neutral-400'
     },
     {
       disabled: true,
