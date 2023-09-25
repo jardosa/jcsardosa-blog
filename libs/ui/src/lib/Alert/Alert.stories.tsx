@@ -26,7 +26,11 @@ export const Primary: Story = {
   args: {
     title: "Title",
     text: "The body content lets the user know why, and how to remedy or proceed.",
-    variant: 'success'
+    variant: 'success',
+    primaryAction: { action: () => console.log('Primary Action'), label: "Action to take" },
+    secondaryAction: { action: () => console.log('Secondary Action'), label: "Alternate action" },
+    isDismissible: true,
+    onDismiss: () => console.log('on dismiss')
   },
 };
 

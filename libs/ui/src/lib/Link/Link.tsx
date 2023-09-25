@@ -10,7 +10,7 @@ const link = cva([
   'active:px-1 active:ring-[3px] active:ring-ui-blue-500 active:text-ui-blue-700',
 ])
 
-export type LinkProps = React.ComponentProps<typeof NextLink>
+export type LinkProps = React.ComponentProps<typeof NextLink> & VariantProps<typeof link>
 
 const Link = forwardRef<ElementRef<'a'>, LinkProps>(({ className, children, ...props }, ref) => {
   return (

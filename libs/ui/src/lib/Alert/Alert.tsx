@@ -1,4 +1,3 @@
-/* eslint-disable-next-line */
 import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 import React, { useMemo } from "react";
@@ -9,6 +8,7 @@ import {
   CheckCircleIcon, LightBulbIcon
 } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import Button from "../Button/Button";
 
 const alertstyle = cva(["py-4 pr-4 pl-12 flex items-start gap-4 relative"], {
   variants: {
@@ -35,6 +35,11 @@ const alertstyle = cva(["py-4 pr-4 pl-12 flex items-start gap-4 relative"], {
   },
 });
 
+type Action = {
+  label: string | React.ReactNode
+  action: () => void
+}
+
 
 export type AlertProps = VariantProps<typeof alertstyle> & {
   title?: string
@@ -42,8 +47,8 @@ export type AlertProps = VariantProps<typeof alertstyle> & {
   isDismissible?: boolean
   variant: "success" | "info" | "warning" | "danger" | "tip"
   onDismiss: () => void
-  primaryAction?: () => void
-  secondaryAction?: () => void
+  primaryAction?: Action
+  secondaryAction?: Action
 }
 
 
@@ -66,9 +71,9 @@ const Alert: React.FC<AlertProps> = ({ variant, title, text, isDismissible, onDi
       <div className="flex flex-col flex-auto gap-2 flex-start">
         <div className="text-xl font-semibold">{title}</div>
         <div className="text-sm">{text}</div>
-        <div>
-          {primaryAction && <button></button>}
-          {secondaryAction && <button></button>}
+        <div className="flex items-center gap-2">
+          {primaryAction && <Button category='primary' intent={'confirm'} onClick={primaryAction.action}>{primaryAction.label}</Button>}
+          {secondaryAction && <Button onClick={secondaryAction.action}>{secondaryAction.label}</Button>}
         </div>
       </div>
       {isDismissible && <XMarkIcon onClick={onDismiss} role="button" className="w-5 h-5 text-neutral-500" />}
