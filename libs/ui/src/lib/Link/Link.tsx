@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import NextLink from 'next/link'
 import { ElementRef, forwardRef } from 'react';
-import { cn } from '../Button/Button';
+import { cn } from '../../utils/tailwindCn';
 
 const link = cva([
   'transition-all ring-offset-1',

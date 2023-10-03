@@ -1,13 +1,8 @@
 'use client'
 
-import { VariantProps, cva, cx, CxOptions } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
 import { ElementRef, forwardRef } from "react"
-
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: CxOptions) {
-  return twMerge(cx(inputs));
-}
+import { cn } from "../../utils/tailwindCn";
 
 const loadingButton = cva([
   "flex items-start flex-start gap-1 rounded-[4px] transition-all text-sm text-neutral-500 outline ",

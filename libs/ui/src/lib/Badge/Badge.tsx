@@ -1,7 +1,7 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { ElementRef, forwardRef } from "react";
-import { cn } from "../Button/Button";
 import { CalendarIcon } from '@heroicons/react/24/solid'
+import { cn } from "../../utils/tailwindCn";
 
 const badge = cva([
   'transition-all duration-200 rounded-xl flex items-center gap-1 flex-start text-neutral-700 bg-neutral-100 w-max',

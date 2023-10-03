@@ -1,11 +1,12 @@
-import type { StorybookConfig } from '@storybook/react-webpack5';
+import type { StorybookConfig } from '@storybook/nextjs';
+import path from 'path';
 const config: StorybookConfig = {
   core: {},
   stories: [
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
   ],
-  addons: ['@storybook/addon-essentials', '@nx/react/plugins/storybook', '@storybook/addon-interactions'],
+  addons: ['@storybook/addon-essentials', '@storybook/addon-interactions'],
   webpackFinal: async (config) => {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
 
@@ -23,8 +24,13 @@ const config: StorybookConfig = {
     return config;
   },
   framework: {
-    name: '@storybook/react-webpack5',
-    options: {},
+    name: '@storybook/nextjs',
+    options: {
+      image: {
+        loading: 'eager',
+      },
+      nextConfigPath: path.resolve(__dirname, '../next.config.js'),
+    },
   },
   docs: {
     autodocs: true,
