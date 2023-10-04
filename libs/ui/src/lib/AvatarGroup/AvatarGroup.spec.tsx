@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Avatar from './Avatar';
+import AvatarGroup from './AvatarGroup';
 
-describe('Avatar', () => {
+describe('AvatarGroup', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Avatar variant='identicon' initial='G' />);
+    const { baseElement } = render(<AvatarGroup />);
     expect(baseElement).toBeTruthy();
   });
 });

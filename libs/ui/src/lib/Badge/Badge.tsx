@@ -70,15 +70,15 @@ const badge = cva([
   }
 })
 
-export interface BadgeProps
-  extends VariantProps<typeof badge> {
-  icon: typeof CalendarIcon
+export interface BadgeProps 
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badge> {
+  icon?: typeof CalendarIcon
   label?: string | React.ReactNode
 }
-const Badge: React.FC<BadgeProps> = forwardRef<ElementRef<'div'>, BadgeProps>(({ intent, icon: Icon, size, label, ...props }, ref) => {
+const Badge: React.FC<BadgeProps> = forwardRef<ElementRef<'div'>, BadgeProps>(({ intent, icon: Icon, size, label, className, ...props }, ref) => {
   return (
-    <div ref={ref} className={cn(badge({ intent, size }))} {...props}>
-      <Icon className="w-4 h-4" />
+    <div ref={ref} className={cn(badge({ intent, size, className }))} {...props}>
+      {Icon && <Icon className="w-4 h-4" />}
       {label}
     </div>
   );

@@ -168,7 +168,7 @@ export interface ButtonProps
 
 
 
-const BaseButton = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, category, size, outlineType, className, children, loading, ...props }, ref) => {
+const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, category, size, outlineType, className, children, loading, ...props }, ref) => {
 
   if (loading) {
     return <button disabled className={cn(loadingButton({ size, category, loading, className }))}>
@@ -190,4 +190,4 @@ const BaseButton = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, cate
   )
 })
 
-export default BaseButton
+export default Button

@@ -16,7 +16,7 @@ const icon = cva(['text-neutral-500'], {
   }
 })
 
-const avatar = cva(['relative overflow-hidden'], {
+const avatar = cva(['relative overflow-hidden cursor-pointer'], {
   variants: {
     size: {
       'xs': ['w-4 h-4 text-xs'],
@@ -40,14 +40,14 @@ const avatar = cva(['relative overflow-hidden'], {
   }
 })
 
-export interface AvatarProps extends VariantProps<typeof avatar> {
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof avatar> {
   variant: 'user' | 'project' | 'group' | 'identicon' | 'admin'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl',
   initial?: string
   src?: string
 }
 
-const Avatar: React.FC<AvatarProps> = ({ variant, size, src, initial }) => {
+const Avatar: React.FC<AvatarProps> = ({ variant, size, src, initial, className, ...props }) => {
 
   const componentToRender = () => {
     if (variant === 'admin') {
@@ -64,7 +64,7 @@ const Avatar: React.FC<AvatarProps> = ({ variant, size, src, initial }) => {
   }
 
   return (
-    <div className={cn(avatar({ size, variant }))} >
+    <div className={cn(avatar({ size, variant, className }))} {...props} >
       {componentToRender()}
     </div>
   );
