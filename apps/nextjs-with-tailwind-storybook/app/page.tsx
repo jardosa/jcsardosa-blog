@@ -1,4 +1,5 @@
-import Button from "libs/ui/src/lib/Button/Button";
+import { Button } from "@mantine/core";
+
 
 export default async function Page() {
 

@@ -1,4 +1,5 @@
 'use client'
+import '@mantine/core/styles.css';
 
 import React, { PropsWithChildren } from 'react'
 import { MantineProvider } from '@mantine/core'
@@ -8,7 +9,7 @@ import { MantineProvider } from '@mantine/core'
 
 const MantineProviderWrapper: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>{children}</MantineProvider>
+    <MantineProvider>{children}</MantineProvider>
   )
 }
 

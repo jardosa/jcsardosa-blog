@@ -6,9 +6,7 @@ import { PingDocument, PingQuery } from '@nx-nextjs-tailwind-storybook/data-acce
 import React from 'react'
 
 const About = () => {
-  const { data, loading } = useQuery<PingQuery>(PingDocument)
-  console.log(data?.ping)
-  console.log(data, loading)
+  // const { data, loading } = useQuery<PingQuery>(PingDocument)
   return (
     <div className='text-2xl'>About</div>
   )

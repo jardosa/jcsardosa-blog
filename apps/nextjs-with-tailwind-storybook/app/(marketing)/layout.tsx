@@ -1,10 +1,8 @@
 import { getClient } from '@nx-nextjs-tailwind-storybook/feature'
 import { PingDocument } from '@nx-nextjs-tailwind-storybook/data-access'
-import './styles.css'
+import '../styles.css'
 import '@mantine/core/styles.css';
-
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
-
+import MantineProviderWrapper from 'libs/feature/src/lib/MantineProvider'
 
 export const metadata = {
   title: 'Create Next App',
@@ -18,15 +16,14 @@ export default async function RootLayout({
   children: React.ReactNode
   params: { lang: string }
 }) {
-  // const { data } = await getClient().query({ query: PingDocument })
-  // console.log({ data })
+  const { data } = await getClient().query({ query: PingDocument })
+  console.log({ data })
   return (
     <html lang={params.lang} className='light'>
-      <head><ColorSchemeScript /></head>
       <body className='font-sans'>
-        <MantineProvider>
+        <MantineProviderWrapper>
           {children}
-        </MantineProvider>
+        </MantineProviderWrapper>
       </body>
     </html>
   )
