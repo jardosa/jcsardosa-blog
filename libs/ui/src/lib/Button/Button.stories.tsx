@@ -85,6 +85,13 @@ export const KitchenSink: Story = {
 }
 
 
+export const Ellipsis: Story = {
+  args: {
+    intent: 'default', category: 'primary', size: 'MD',
+    buttonType: 'ellipsis',
+    onClick: () => console.log('on click')
+  },
+}
 export const Icon: Story = {
   args: {
     intent: 'default', category: 'primary', size: 'MD',

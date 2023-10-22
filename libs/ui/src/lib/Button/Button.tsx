@@ -1,13 +1,13 @@
 'use client'
 
 import { VariantProps, cva } from "class-variance-authority";
-import { ElementRef, ReactNode, forwardRef } from "react"
+import { ElementRef, forwardRef } from "react"
 import { cn } from "../../utils/tailwindCn";
 import { pad } from 'lodash'
 import * as nodeEmoji from 'node-emoji'
-import { Bars2Icon, Bars3BottomLeftIcon, BarsArrowDownIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Bars2Icon, BarsArrowDownIcon, ChevronDownIcon, EllipsisHorizontalCircleIcon } from "@heroicons/react/20/solid";
 import { HiBarsArrowDown } from 'react-icons/hi2'
-import Badge from "../Badge/Badge";
+import Badge, { BadgeProps } from "../Badge/Badge";
 
 
 const loadingButton = cva([
@@ -56,6 +56,7 @@ const button = cva([
       'icon': [],
       'icon-dropdown': [],
       'icon-dropdown-split': [],
+      'ellipsis': []
     },
     category: {
       primary: ["text-white"],
@@ -204,7 +205,8 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     'sorting' |
     'icon' |
     'icon-dropdown' |
-    'icon-dropdown-split'
+    'icon-dropdown-split' |
+    'ellipsis'
   }
 
 
@@ -228,6 +230,14 @@ const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({
   ...props }, ref) => {
 
 
+  const badgeColor = (): BadgeProps['intent'] => {
+    if (intent === 'confirm') {
+      return 'info'
+    } else if (intent === 'danger') {
+      return 'danger'
+    }
+    return 'neutral-muted'
+  }
 
 
   if (loading) {
@@ -237,6 +247,14 @@ const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({
         <path d="M16 8C16 3.58172 12.4183 0 8 0V2C11.3137 2 14 4.68629 14 8H16Z" fill="#535158" />
       </svg>}
       Loading
+    </button>
+  }
+
+  if (buttonType === 'ellipsis') {
+    return <button
+      className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }))}
+      {...props}>
+      {<EllipsisHorizontalCircleIcon className="w-5 h-5" />}
     </button>
   }
 
@@ -347,7 +365,7 @@ const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({
         {!!emoji && <div>{`${nodeEmoji.get(pad(emoji, 1, ':'))}`}</div>}
         {!!IconLeft && <IconLeft className="w-5 h-5" />}
         {!!label && <div>{label}</div>}
-        {!!badgeLabel && <Badge size={'MD'} className="text-center" label={badgeLabel} />}
+        {!!badgeLabel && <Badge intent={badgeColor()} size={'MD'} className="text-center" label={badgeLabel} />}
         {!!IconLeft && <IconLeft className="w-5 h-5" />}
       </button>
       {!!isSplit && <button
