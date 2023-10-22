@@ -24,7 +24,7 @@ const loadingButton = cva([
     category: {
       primary: ['outline-1 outline-neutral-100 bg-neutral-10'],
       secondary: ['outline-1 outline-neutral-100 bg-neutral-10'],
-      tertiary: ['outline-none', "bg-white", "text-neutral-400"],
+      tertiary: ['outline-none', "bg-none", "text-neutral-400"],
     }
   },
   defaultVariants: {
@@ -38,30 +38,29 @@ const button = cva([
   "flex items-center gap-1 rounded-[4px] transition text-sm",
   "outline outline-1",
   "focus:ring-offset-[3px] focus:ring-2 focus:ring-ui-blue-500",
-  "hover:relative active:relative focus:relative",
   "active:ring-offset-[3px] active:ring-2 active:ring-ui-blue-500",
   "disabled:hover:outline-1 disabled:bg-neutral-10 disabled:text-neutral-500 disabled:outline-neutral-100"
 ], {
   variants: {
     intent: {
-      default: ['bg-white'],
+      default: [],
       confirm: [],
       danger: [],
     },
     buttonType: {
       default: [],
       dropdown: [],
-      'dropdown-split': [],
-      'sorting': [],
+      'dropdown-split': ["hover:relative active:relative focus:relative"],
+      'sorting': ["hover:relative active:relative focus:relative"],
       'icon': [],
       'icon-dropdown': [],
-      'icon-dropdown-split': [],
+      'icon-dropdown-split': ["hover:relative active:relative focus:relative"],
       'ellipsis': []
     },
     category: {
       primary: ["text-white"],
       secondary: ['bg-white'],
-      tertiary: ['!outline-none', "bg-white"],
+      tertiary: ['!outline-none', "bg-none"],
     },
     size: {
       MD: ['p-2'],
@@ -185,7 +184,7 @@ type RightInfo = {
 } | {
   isSplit?: undefined | false
   splitIcon?: never;
-  rightOnClick: never;
+  rightOnClick?: never;
 }
 
 
@@ -198,7 +197,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     iconRight?: typeof Bars2Icon | typeof HiBarsArrowDown;
     badgeLabel?: string;
     emoji?: string;
-    buttonType:
+  buttonType?:
     'default' |
     'dropdown' |
     'dropdown-split' |
@@ -206,7 +205,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     'icon' |
     'icon-dropdown' |
     'icon-dropdown-split' |
-    'ellipsis'
+  'ellipsis';
   }
 
 
