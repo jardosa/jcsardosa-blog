@@ -59,8 +59,8 @@ const badge = cva([
       ],
     },
     size: {
-      'SM': ['pr-2 text-xs rounded-lg'],
-      'MD': ['p-1 pr-2 text-xs rounded-xl'],
+      'SM': ['text-xs rounded-lg'],
+      'MD': ['p-1 text-xs rounded-xl'],
       'LG': ['p-2 text-sm rounded-2xl'],
     }
   },

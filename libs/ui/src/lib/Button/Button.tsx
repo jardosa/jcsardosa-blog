@@ -1,8 +1,14 @@
 'use client'
 
 import { VariantProps, cva } from "class-variance-authority";
-import { ElementRef, forwardRef } from "react"
+import { ElementRef, ReactNode, forwardRef } from "react"
 import { cn } from "../../utils/tailwindCn";
+import { pad } from 'lodash'
+import * as nodeEmoji from 'node-emoji'
+import { Bars2Icon, Bars3BottomLeftIcon, BarsArrowDownIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { HiBarsArrowDown } from 'react-icons/hi2'
+import Badge from "../Badge/Badge";
+
 
 const loadingButton = cva([
   "flex items-start flex-start gap-1 rounded-[4px] transition-all text-sm text-neutral-500 outline ",
@@ -29,9 +35,10 @@ const loadingButton = cva([
 })
 
 const button = cva([
-  "flex items-start rounded-[4px] transition-all text-sm",
+  "flex items-center gap-1 rounded-[4px] transition text-sm",
   "outline outline-1",
   "focus:ring-offset-[3px] focus:ring-2 focus:ring-ui-blue-500",
+  "hover:relative active:relative focus:relative",
   "active:ring-offset-[3px] active:ring-2 active:ring-ui-blue-500",
   "disabled:hover:outline-1 disabled:bg-neutral-10 disabled:text-neutral-500 disabled:outline-neutral-100"
 ], {
@@ -40,6 +47,15 @@ const button = cva([
       default: ['bg-white'],
       confirm: [],
       danger: [],
+    },
+    buttonType: {
+      default: [],
+      dropdown: [],
+      'dropdown-split': [],
+      'sorting': [],
+      'icon': [],
+      'icon-dropdown': [],
+      'icon-dropdown-split': [],
     },
     category: {
       primary: ["text-white"],
@@ -155,20 +171,64 @@ const button = cva([
   defaultVariants: {
     intent: "default",
     size: 'MD',
-    category: 'primary'
+    category: 'primary',
+    buttonType: 'default',
+    outlineType: 'normal'
   },
 });
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof button> {
-  disabled?: boolean
-  loading?: boolean
+type RightInfo = {
+  isSplit: true
+  splitIcon: typeof Bars2Icon | typeof HiBarsArrowDown
+  rightOnClick: React.MouseEventHandler<HTMLButtonElement>
+} | {
+  isSplit?: undefined | false
+  splitIcon?: never;
+  rightOnClick: never;
 }
 
 
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof button> & RightInfo & {
+    disabled?: boolean;
+    loading?: boolean;
+    label?: string;
+    iconLeft?: typeof Bars2Icon | typeof HiBarsArrowDown;
+    iconRight?: typeof Bars2Icon | typeof HiBarsArrowDown;
+    badgeLabel?: string;
+    emoji?: string;
+    buttonType:
+    'default' |
+    'dropdown' |
+    'dropdown-split' |
+    'sorting' |
+    'icon' |
+    'icon-dropdown' |
+    'icon-dropdown-split'
+  }
 
-const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, category, size, outlineType, className, children, loading, ...props }, ref) => {
+
+
+const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({
+  intent,
+  category,
+  size,
+  outlineType,
+  className,
+  loading,
+  label,
+  iconLeft: IconLeft,
+  iconRight: IconRight,
+  badgeLabel,
+  emoji,
+  splitIcon: SplitIcon,
+  rightOnClick,
+  isSplit,
+  buttonType,
+  ...props }, ref) => {
+
+
+
 
   if (loading) {
     return <button disabled className={cn(loadingButton({ size, category, loading, className }))}>
@@ -176,17 +236,129 @@ const Button = forwardRef<ElementRef<'button'>, ButtonProps>(({ intent, category
         <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" fill="#DCDCDE" />
         <path d="M16 8C16 3.58172 12.4183 0 8 0V2C11.3137 2 14 4.68629 14 8H16Z" fill="#535158" />
       </svg>}
-      <div>{loading ? "Loading" : children}</div>
+      Loading
     </button>
   }
 
-  return (
-    <button
-      ref={ref}
+  if (buttonType === 'icon') {
+    return <button
       className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }))}
       {...props}>
-      {children}
+      {!!IconLeft && <IconLeft className="w-5 h-5" />}
+      {!!IconRight && !IconLeft && <IconRight className="w-5 h-5" />}
     </button>
+  }
+
+  if (buttonType === 'dropdown') {
+    return <button
+      className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }))}
+      {...props}>
+      {!!label && <div>{label}</div>}
+      <ChevronDownIcon className="w-5 h-5" />
+    </button>
+  }
+
+  if (buttonType === 'icon-dropdown') {
+    return <button
+      className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }))}
+      {...props}>
+      {!!IconLeft && <IconLeft className="w-5 h-5" />}
+      {!!IconRight && !IconLeft && <IconRight className="w-5 h-5" />}
+      <ChevronDownIcon className="w-5 h-5" />
+    </button>
+  }
+
+  if (buttonType === 'icon-dropdown-split') {
+    return (
+      <div className={cn("flex", intent !== 'default' && 'gap-[3px]')}>
+        <button
+          className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+            'rounded-r-none'
+          )}
+          {...props}>
+          {!!IconLeft && <IconLeft className="w-5 h-5" />}
+        </button>
+
+        <button
+          ref={ref}
+          onClick={rightOnClick}
+          className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+            'rounded-l-none'
+          )}>
+          <ChevronDownIcon className={'w-5 h-5'} />
+        </button>
+      </div>)
+  }
+
+  if (buttonType === 'dropdown-split') {
+    return (
+      <div className={cn("flex", intent !== 'default' && 'gap-[3px]')}>
+        <button
+          className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+            'rounded-r-none'
+          )}
+          {...props}>
+          {!!label && <div>{label}</div>}
+        </button>
+
+        <button
+          ref={ref}
+          onClick={rightOnClick}
+          className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+            'rounded-l-none'
+          )}>
+          <ChevronDownIcon className={'w-5 h-5'} />
+        </button>
+      </div>)
+  }
+
+  if (buttonType === 'sorting') {
+    return (
+      <div className={cn("flex", intent !== 'default' && 'gap-[3px]')}>
+        <button
+          className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+            'rounded-r-none'
+          )}
+          {...props}>
+          {!!label && <div>{label}</div>}
+          <ChevronDownIcon className={'w-5 h-5'} />
+        </button>
+
+        <button
+          ref={ref}
+          onClick={rightOnClick}
+          className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+            'rounded-l-none'
+          )}>
+          <BarsArrowDownIcon className={'w-5 h-5'} />
+        </button>
+      </div>)
+  }
+
+
+  return (
+    <div className={cn("flex", intent !== 'default' && 'gap-[3px]')}>
+      <button
+        ref={ref}
+        className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+          isSplit && 'rounded-r-none'
+        )}
+        {...props}>
+        {!!emoji && <div>{`${nodeEmoji.get(pad(emoji, 1, ':'))}`}</div>}
+        {!!IconLeft && <IconLeft className="w-5 h-5" />}
+        {!!label && <div>{label}</div>}
+        {!!badgeLabel && <Badge size={'MD'} className="text-center" label={badgeLabel} />}
+        {!!IconLeft && <IconLeft className="w-5 h-5" />}
+      </button>
+      {!!isSplit && <button
+        ref={ref}
+        onClick={rightOnClick}
+        className={cn(button({ className, disabled: props.disabled, intent, category, size, outlineType }),
+          isSplit && 'rounded-l-none'
+        )}>
+        {!!SplitIcon && <SplitIcon className={'w-5 h-5'} />}
+      </button>}
+    </div>
   )
 })
 
