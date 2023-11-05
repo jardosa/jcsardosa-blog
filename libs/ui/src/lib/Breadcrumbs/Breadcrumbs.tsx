@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC, useMemo, useState } from "react";
 import { IconType } from "react-icons/lib";
-import { AiOutlineEllipsis } from 'react-icons/ai/index'
+import { FaEllipsisH } from 'react-icons/fa'
 
 export type Breadcrumb = {
   avatar?: IconType;
@@ -32,7 +32,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ items }) => {
     if (items.length > 3 && !expandItems) {
       return [...items.slice(0, 1),
       {
-        avatar: AiOutlineEllipsis,
+        avatar: FaEllipsisH,
         onClick: () => {
           setExpandItems(true)
         }
