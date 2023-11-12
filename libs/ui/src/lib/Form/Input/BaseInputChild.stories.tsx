@@ -17,7 +17,6 @@ export const Primary: Story = {
     label: 'Label',
     size: 'md',
     isSearch: true,
-    isClearable: true,
     validationText: '28 Characters Remaining',
     prefix: {
       label: <MagnifyingGlassIcon className='w-5 h-5 text-neutral-500' />,

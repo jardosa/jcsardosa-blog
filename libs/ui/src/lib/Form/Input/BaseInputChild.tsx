@@ -1,10 +1,11 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "libs/ui/src/utils/tailwindCn";
-import { ElementRef, FC, forwardRef, useState } from "react";
+import { ElementRef, forwardRef } from "react";
 import BasePrefix, { BasePrefixProps } from "./BasePrefix";
 import BaseSuffix, { BaseSuffixProps } from "./BaseSuffix";
-import { MagnifyingGlassIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { Bars2Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import Button from "../../Button/Button";
+import { HiBarsArrowDown } from "react-icons/hi2";
 
 
 const baseInputChild = cva(['py-2 px-3',
@@ -23,7 +24,7 @@ const baseInputChild = cva(['py-2 px-3',
       true: ['pl-8'],
       false: []
     },
-    isClearable: {
+    hasAddon: {
       true: ['pr-8'],
       false: []
     },
@@ -50,29 +51,33 @@ const baseInputChild = cva(['py-2 px-3',
 export type BaseInputChildProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'>
   & Omit<VariantProps<typeof baseInputChild>, 'error'>
   & {
-    label: string
-    prefix?: BasePrefixProps
-    suffix?: BaseSuffixProps
-    error?: string
-    success?: string
-    validationText?: string,
+  label: string;
+  prefix?: BasePrefixProps;
+  suffix?: BaseSuffixProps;
+  error?: string;
+  success?: string;
+  validationText?: string;
+  addon?: {
+    icon: typeof Bars2Icon | typeof HiBarsArrowDown,
+    onClick: () => void
+  };
   }
-// : FC<BaseInputChildProps>
+
 const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ className,
   name,
   label,
   prefix,
   suffix,
   isSearch,
-  isClearable,
   error,
   size,
   validationText,
+  value,
+  addon,
   success, ...props }, ref) => {
-  const [value, setValue] = useState('')
 
   return (
-    <div tabIndex={0}>
+    <div>
       <label className="mb-1 text-sm font-bold leading-4" htmlFor={name}>{label}</label>
       <div className="flex">
         {prefix && <BasePrefix type={prefix.type} label={prefix.label} onClick={prefix.onClick} />}
@@ -81,20 +86,19 @@ const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ c
           <input
             ref={ref}
             value={value}
-            onChange={(event) => setValue(event.target.value)}
-            className={cn(baseInputChild({ className, isSearch, size, isClearable }),
+            className={cn(baseInputChild({ className, isSearch, size, hasAddon: !!addon }),
               prefix && 'rounded-l-none',
               suffix && 'rounded-r-none',
               'w-full'
             )} {...props}>
           </input>
           {isSearch && <MagnifyingGlassIcon className="absolute w-5 h-5 left-2 text-neutral-500" />}
-          {isClearable && <Button
+          {addon && <Button
             category={'tertiary'}
+            onClick={() => addon.onClick()}
             buttonType="icon"
-            iconLeft={XCircleIcon}
+            iconLeft={addon?.icon}
             role="button"
-            onClick={() => setValue('')}
             className="absolute right-0 text-neutral-500" />}
         </div>
 
