@@ -1,7 +1,7 @@
 'use client'
 
 import { VariantProps, cva } from "class-variance-authority";
-import { ElementRef, forwardRef } from "react"
+import { ElementRef, ReactNode, forwardRef } from "react"
 import { cn } from "../../utils/tailwindCn";
 import { pad } from 'lodash'
 import * as nodeEmoji from 'node-emoji'
@@ -192,7 +192,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof button> & RightInfo & {
     disabled?: boolean;
     loading?: boolean;
-    label?: string;
+  label?: string | ReactNode;
     iconLeft?: typeof Bars2Icon | typeof HiBarsArrowDown;
     iconRight?: typeof Bars2Icon | typeof HiBarsArrowDown;
     badgeLabel?: string;
