@@ -30,7 +30,7 @@ export const databaseConfigAsync: MongooseModuleAsyncOptions = {
     CommonModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'apps/api/schema.gql'),
       playground: true,
       subscriptions: {
         'graphql-ws': true,

@@ -1,0 +1,13 @@
+#import  '../fragments/post.fragment.graphql'
+
+query GetPost($_id: ID!) {
+  post(_id: $_id) {
+    ...postFields
+  }
+}
+
+query FindPosts($searchInput: SearchPostsInput!) {
+  posts(searchInput: $searchInput) {
+    ...postFields
+  }
+}

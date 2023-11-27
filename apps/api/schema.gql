@@ -36,7 +36,8 @@ type Query {
   whoAmI: User!
   users(input: SearchUsersInput): [User!]!
   user(input: SearchUserInput!): User
-  post(id: Int!): Post!
+  posts(searchInput: SearchPostsInput!): [Post!]!
+  post(_id: ID!): Post!
 }
 
 type User implements Node & TimeStamps {
@@ -68,7 +69,14 @@ type Post implements Node & TimeStamps {
   updatedAt: DateTime!
   title: String!
   content: String!
-  authorId: String!
+  author: User!
+  publishedAt: DateTime!
+}
+
+input SearchPostsInput {
+  userId: ID!
+  limit: Float = 10
+  offset: Float = 0
 }
 
 type Mutation {
@@ -80,7 +88,9 @@ type Mutation {
   removeUser(_id: ID!): User!
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(updatePostInput: UpdatePostInput!): Post!
-  removePost(id: Int!): Post!
+
+  """Deletes a post"""
+  removePost(_id: ID!): Post!
 }
 
 input CreateUserInput {

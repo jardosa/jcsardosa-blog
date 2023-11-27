@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, ID } from '@nestjs/graphql';
 import { PostService } from './post.service';
 
 import { CreatePostInput } from './dto/create-post.input';
@@ -8,10 +8,15 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/guards/gqlAuth.guard';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 import { User } from '../user/schema/user.schema';
+import { UserService } from '../user/user.service';
+import { SearchPostsInput } from './dto/search-posts.input';
 
 @Resolver(() => Post)
 export class PostResolver {
-  constructor(private readonly postService: PostService) { }
+  constructor(
+    private readonly postService: PostService,
+    private readonly userService: UserService
+  ) { }
 
   @Mutation(() => Post)
   @UseGuards(GqlAuthGuard)
@@ -19,26 +24,36 @@ export class PostResolver {
     @CurrentUser() user: User,
     @Args('createPostInput') createPostInput: CreatePostInput
   ) {
-    return this.postService.create({ ...createPostInput, authorId: user._id });
+    return this.postService.create({ ...createPostInput, author: user._id });
   }
 
-  @Query(() => [Post], { name: 'post' })
-  findAll() {
-    return this.postService.findAll();
+  @Query(() => [Post], { name: 'posts' })
+  findAll(@Args('searchInput') searchInput: SearchPostsInput) {
+    return this.postService.findAll(searchInput);
   }
 
   @Query(() => Post, { name: 'post' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.postService.findOne(id);
+  findOne(@Args('_id', { type: () => ID }) _id: string) {
+    return this.postService.findOne(_id);
   }
-
   @Mutation(() => Post)
   updatePost(@Args('updatePostInput') updatePostInput: UpdatePostInput) {
     return this.postService.update(updatePostInput.id, updatePostInput);
   }
 
-  @Mutation(() => Post)
-  removePost(@Args('id', { type: () => Int }) id: number) {
-    return this.postService.remove(id);
+  @Mutation(() => Post, { description: "Deletes a post" })
+  removePost(@Args('_id', { type: () => ID }) _id: string) {
+    return this.postService.remove(_id);
+  }
+
+  @ResolveField('author', () => User)
+  async getAuthor(
+    @Parent() post: Post,
+
+  ): Promise<User> {
+    const { author } = post;
+    const record = await this.userService.findOne({ _id: author })
+
+    return record
   }
 }

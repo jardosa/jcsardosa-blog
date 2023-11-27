@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import TimeStamps from '../../common/entities/timestamps';
@@ -19,8 +19,12 @@ export class Post extends Node {
   content: string;
 
   @Prop({ ref: User.name, type: Types.ObjectId })
+  @Field(() => ID)
+  author: string;
+
+  @Prop()
   @Field()
-  authorId: string;
+  publishedAt: Date;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

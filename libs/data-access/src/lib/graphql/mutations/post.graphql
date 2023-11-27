@@ -1,0 +1,13 @@
+#import  '../fragments/post.fragment.graphql'
+
+mutation CreatePost($createPostInput: CreatePostInput!) {
+  createPost(createPostInput: $createPostInput) {
+    ...postFields
+  }
+}
+
+mutation RemovePost($_id: ID!) {
+  removePost(_id: $_id) {
+    ...postFields
+  }
+}

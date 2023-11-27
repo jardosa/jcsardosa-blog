@@ -1,0 +1,11 @@
+#import  './author.fragment.graphql'
+
+fragment postFields on Post {
+  title
+  content
+  createdAt
+  updatedAt
+  author {
+    ...authorFields
+  }
+}

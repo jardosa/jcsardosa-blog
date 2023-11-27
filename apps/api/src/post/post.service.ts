@@ -4,31 +4,47 @@ import { UpdatePostInput } from './dto/update-post.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './schema/post.schema';
 import { Model, Types } from 'mongoose';
+import { SearchPostsInput } from './dto/search-posts.input';
 
 @Injectable()
 export class PostService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) { }
 
   async create(createPostInput: CreatePostInput) {
-    const createdUser = new this.postModel({ ...createPostInput, authorId: new Types.ObjectId(createPostInput.authorId) });
+    const createdpost = new this.postModel({ ...createPostInput, authorId: new Types.ObjectId(createPostInput.author) });
 
-    console.log({ createdUser })
-    return (await createdUser.save()).toObject();
+    return (await createdpost.save()).toObject();
   }
 
-  findAll() {
-    return `This action returns all post`;
+  async findAll(searchPostInput: SearchPostsInput) {
+    const posts = await this.postModel.find(searchPostInput).sort({
+      _id: 'descending',
+    })
+      .limit(searchPostInput.limit)
+      .skip(searchPostInput.offset)
+    return posts
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: string) {
+    const post = await this.postModel.findById(id)
+    return post;
   }
 
-  update(id: string, updatePostInput: UpdatePostInput) {
-    return `This action updates a #${id} post`;
+  async update(
+    _id: string,
+    updatePostInput: UpdatePostInput,
+  ): Promise<PostDocument> {
+    const updatedPost = await this.postModel.findByIdAndUpdate(
+      _id,
+      updatePostInput,
+      { new: true },
+    );
+
+    return updatedPost;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(_id: string): Promise<PostDocument> {
+    const removedPost = await this.postModel.findByIdAndDelete(_id);
+    return removedPost;
   }
 }

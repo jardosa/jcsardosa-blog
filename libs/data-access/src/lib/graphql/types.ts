@@ -12,11 +12,51 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
+};
+
+export type CreatePostInput = {
+  /** Content of post */
+  content: Scalars['String']['input'];
+  /** Title of post */
+  title: Scalars['String']['input'];
+};
+
+export type CreateUserInput = {
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type LoginPayload = {
+  __typename?: 'LoginPayload';
+  authToken: Scalars['String']['output'];
+  profile: Profile;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createPost: Post;
+  createUser: User;
   echo: Scalars['String']['output'];
+  login: LoginPayload;
+  register: LoginPayload;
+  /** Deletes a post */
+  removePost: Post;
+  removeUser: User;
+  updatePost: Post;
+  updateUser: User;
+};
+
+
+export type MutationCreatePostArgs = {
+  createPostInput: CreatePostInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  createUserInput: CreateUserInput;
 };
 
 
@@ -24,8 +64,140 @@ export type MutationEchoArgs = {
   message: Scalars['String']['input'];
 };
 
+
+export type MutationLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+
+export type MutationRegisterArgs = {
+  registerInput: CreateUserInput;
+};
+
+
+export type MutationRemovePostArgs = {
+  _id: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveUserArgs = {
+  _id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdatePostArgs = {
+  updatePostInput: UpdatePostInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  updateUserInput: UpdateUserInput;
+};
+
+export type Node = {
+  _id: Scalars['ID']['output'];
+};
+
+export type Post = Node & TimeStamps & {
+  __typename?: 'Post';
+  _id: Scalars['ID']['output'];
+  author: User;
+  content: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  publishedAt: Scalars['DateTime']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type Profile = Node & TimeStamps & {
+  __typename?: 'Profile';
+  _id: Scalars['ID']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  email: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   ping: Scalars['String']['output'];
   port: Scalars['Float']['output'];
+  post: Post;
+  posts: Array<Post>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  whoAmI: User;
+};
+
+
+export type QueryPostArgs = {
+  _id: Scalars['ID']['input'];
+};
+
+
+export type QueryPostsArgs = {
+  searchInput: SearchPostsInput;
+};
+
+
+export type QueryUserArgs = {
+  input: SearchUserInput;
+};
+
+
+export type QueryUsersArgs = {
+  input?: InputMaybe<SearchUsersInput>;
+};
+
+export type SearchPostsInput = {
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+  userId: Scalars['ID']['input'];
+};
+
+export type SearchUserInput = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SearchUsersInput = {
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type TimeStamps = {
+  createdAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type UpdatePostInput = {
+  /** Content of post */
+  content?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  /** Title of post */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateUserInput = {
+  _id: Scalars['ID']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type User = Node & TimeStamps & {
+  __typename?: 'User';
+  _id: Scalars['ID']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
