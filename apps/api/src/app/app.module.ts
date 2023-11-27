@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
+import { PostModule } from '../post/post.module';
 
 export const databaseConfigAsync: MongooseModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -37,7 +38,8 @@ export const databaseConfigAsync: MongooseModuleAsyncOptions = {
     }),
     MongooseModule.forRootAsync(databaseConfigAsync),
     AuthModule,
-    UserModule
+    UserModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

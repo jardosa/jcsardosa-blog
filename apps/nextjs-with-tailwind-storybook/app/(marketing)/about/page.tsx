@@ -166,7 +166,7 @@ const workExperiences = [
 const About = () => {
 
   return (
-    <div className='grid h-screen py-10 place-items-center'>
+    <div className='grid py-10 place-items-center'>
       <div className='w-3/4 mx-auto space-y-5 shadow-lg '>
         <div className="flex gap-2 px-10">
           <div>

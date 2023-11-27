@@ -36,6 +36,7 @@ type Query {
   whoAmI: User!
   users(input: SearchUsersInput): [User!]!
   user(input: SearchUserInput!): User
+  post(id: Int!): Post!
 }
 
 type User implements Node & TimeStamps {
@@ -61,6 +62,15 @@ input SearchUserInput {
   email: String
 }
 
+type Post implements Node & TimeStamps {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  content: String!
+  authorId: String!
+}
+
 type Mutation {
   echo(message: String!): String!
   register(registerInput: CreateUserInput!): LoginPayload!
@@ -68,6 +78,9 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(_id: ID!): User!
+  createPost(createPostInput: CreatePostInput!): Post!
+  updatePost(updatePostInput: UpdatePostInput!): Post!
+  removePost(id: Int!): Post!
 }
 
 input CreateUserInput {
@@ -83,4 +96,21 @@ input UpdateUserInput {
   email: String
   password: String
   _id: ID!
+}
+
+input CreatePostInput {
+  """Title of post"""
+  title: String!
+
+  """Content of post"""
+  content: String!
+}
+
+input UpdatePostInput {
+  """Title of post"""
+  title: String
+
+  """Content of post"""
+  content: String
+  id: ID!
 }
