@@ -5,13 +5,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './schema/post.schema';
 import { Model, Types } from 'mongoose';
 import { SearchPostsInput } from './dto/search-posts.input';
+import slugify from 'slugify'
 
 @Injectable()
 export class PostService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) { }
 
   async create(createPostInput: CreatePostInput) {
-    const createdpost = new this.postModel({ ...createPostInput, authorId: new Types.ObjectId(createPostInput.author) });
+    const createdpost = new this.postModel({
+      ...createPostInput,
+      author: new Types.ObjectId(createPostInput.author),
+    });
 
     return (await createdpost.save()).toObject();
   }
@@ -36,7 +40,10 @@ export class PostService {
   ): Promise<PostDocument> {
     const updatedPost = await this.postModel.findByIdAndUpdate(
       _id,
-      updatePostInput,
+      {
+        ...updatePostInput,
+        ...updatePostInput.title && { content: slugify(updatePostInput.title) },
+      },
       { new: true },
     );
 

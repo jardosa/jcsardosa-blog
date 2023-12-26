@@ -15,6 +15,10 @@ export class Post extends Node {
   title: string;
 
   @Prop()
+  @Field({ nullable: true })
+  slug?: string;
+
+  @Prop()
   @Field()
   content: string;
 

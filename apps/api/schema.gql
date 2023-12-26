@@ -68,6 +68,7 @@ type Post implements Node & TimeStamps {
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String!
+  slug: String
   content: String!
   author: User!
   publishedAt: DateTime!
