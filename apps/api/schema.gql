@@ -115,6 +115,9 @@ input CreatePostInput {
 
   """Content of post"""
   content: String!
+
+  """Slug of the post. This will be used as a Human-readable ID"""
+  slug: String!
 }
 
 input UpdatePostInput {
@@ -123,5 +126,8 @@ input UpdatePostInput {
 
   """Content of post"""
   content: String
+
+  """Slug of the post. This will be used as a Human-readable ID"""
+  slug: String
   id: ID!
 }

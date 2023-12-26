@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,7 +11,17 @@ import slugify from 'slugify'
 export class PostService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) { }
 
+  async checkSlugValidity(slug: string) {
+    const existingSlugRecord = await this.postModel.findOne({ slug })
+    if (existingSlugRecord) {
+      throw new UnprocessableEntityException("Slug already taken")
+    }
+  }
+
   async create(createPostInput: CreatePostInput) {
+
+    await this.checkSlugValidity(createPostInput.slug)
+
     const createdpost = new this.postModel({
       ...createPostInput,
       author: new Types.ObjectId(createPostInput.author),
@@ -38,12 +48,12 @@ export class PostService {
     _id: string,
     updatePostInput: UpdatePostInput,
   ): Promise<PostDocument> {
+    if (updatePostInput.slug) {
+      await this.checkSlugValidity(updatePostInput.slug)
+    }
     const updatedPost = await this.postModel.findByIdAndUpdate(
       _id,
-      {
-        ...updatePostInput,
-        ...updatePostInput.title && { content: slugify(updatePostInput.title) },
-      },
+      updatePostInput,
       { new: true },
     );
 
