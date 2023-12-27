@@ -18,6 +18,8 @@ export type Scalars = {
 export type CreatePostInput = {
   /** Content of post */
   content: Scalars['String']['input'];
+  /** Slug of the post. This will be used as a Human-readable ID */
+  slug: Scalars['String']['input'];
   /** Title of post */
   title: Scalars['String']['input'];
 };
@@ -106,6 +108,7 @@ export type Post = Node & TimeStamps & {
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   publishedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -124,7 +127,7 @@ export type Query = {
   __typename?: 'Query';
   ping: Scalars['String']['output'];
   port: Scalars['Float']['output'];
-  post: Post;
+  post?: Maybe<Post>;
   posts: Array<Post>;
   user?: Maybe<User>;
   users: Array<User>;
@@ -133,7 +136,8 @@ export type Query = {
 
 
 export type QueryPostArgs = {
-  _id: Scalars['ID']['input'];
+  _id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -180,6 +184,8 @@ export type UpdatePostInput = {
   /** Content of post */
   content?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
+  /** Slug of the post. This will be used as a Human-readable ID */
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** Title of post */
   title?: InputMaybe<Scalars['String']['input']>;
 };

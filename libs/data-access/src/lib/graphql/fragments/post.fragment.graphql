@@ -8,4 +8,5 @@ fragment postFields on Post {
   author {
     ...authorFields
   }
+  slug
 }

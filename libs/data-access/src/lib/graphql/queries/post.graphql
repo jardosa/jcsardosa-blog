@@ -1,7 +1,7 @@
 #import  '../fragments/post.fragment.graphql'
 
-query GetPost($_id: ID!) {
-  post(_id: $_id) {
+query GetPost($_id: ID, $slug: String) {
+  post(_id: $_id, slug: $slug) {
     ...postFields
   }
 }

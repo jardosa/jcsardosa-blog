@@ -37,7 +37,7 @@ type Query {
   users(input: SearchUsersInput): [User!]!
   user(input: SearchUserInput!): User
   posts(searchInput: SearchPostsInput!): [Post!]!
-  post(_id: ID!): Post!
+  post(_id: ID, slug: String): Post
 }
 
 type User implements Node & TimeStamps {

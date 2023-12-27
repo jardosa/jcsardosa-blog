@@ -6,23 +6,24 @@ import { PostFieldsFragmentDoc } from '../fragments/post.fragment.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetPostQueryVariables = Types.Exact<{
-  _id: Types.Scalars['ID']['input'];
+  _id?: Types.InputMaybe<Types.Scalars['ID']['input']>;
+  slug?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type GetPostQuery = { __typename?: 'Query', post: { __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } } };
+export type GetPostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, slug?: string | null, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } } | null };
 
 export type FindPostsQueryVariables = Types.Exact<{
   searchInput: Types.SearchPostsInput;
 }>;
 
 
-export type FindPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } }> };
+export type FindPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, slug?: string | null, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } }> };
 
 
 export const GetPostDocument = gql`
-    query GetPost($_id: ID!) {
-  post(_id: $_id) {
+    query GetPost($_id: ID, $slug: String) {
+  post(_id: $_id, slug: $slug) {
     ...postFields
   }
 }
@@ -41,10 +42,11 @@ export const GetPostDocument = gql`
  * const { data, loading, error } = useGetPostQuery({
  *   variables: {
  *      _id: // value for '_id'
+ *      slug: // value for 'slug'
  *   },
  * });
  */
-export function useGetPostQuery(baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+export function useGetPostQuery(baseOptions?: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
       }

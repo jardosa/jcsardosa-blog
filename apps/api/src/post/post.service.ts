@@ -39,9 +39,14 @@ export class PostService {
     return posts
   }
 
-  async findOne(id: string) {
-    const post = await this.postModel.findById(id)
+  async findOne(id: string): Promise<Post | null> {
+    const post = await this.postModel.findById(id) || null
     return post;
+  }
+
+  async findOneBySlug(slug: string): Promise<Post | null> {
+    const post = await this.postModel.findOne({ slug }) || null
+    return post
   }
 
   async update(

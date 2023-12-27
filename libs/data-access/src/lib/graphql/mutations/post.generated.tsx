@@ -10,14 +10,14 @@ export type CreatePostMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, slug?: string | null, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } } };
 
 export type RemovePostMutationVariables = Types.Exact<{
   _id: Types.Scalars['ID']['input'];
 }>;
 
 
-export type RemovePostMutation = { __typename?: 'Mutation', removePost: { __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } } };
+export type RemovePostMutation = { __typename?: 'Mutation', removePost: { __typename?: 'Post', title: string, content: string, createdAt: string, updatedAt: string, slug?: string | null, author: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string } } };
 
 
 export const CreatePostDocument = gql`
