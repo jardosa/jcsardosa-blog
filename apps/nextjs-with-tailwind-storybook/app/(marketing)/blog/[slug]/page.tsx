@@ -2,6 +2,9 @@ import { GetPostDocument, GetPostQuery, GetPostQueryHookResult, GetPostQueryResu
 import { getClient } from '@nx-nextjs-tailwind-storybook/feature'
 import { NextPage } from 'next'
 import React from 'react'
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import remarkToc from "remark-toc";
 
 const BlogViewPage: NextPage<{ params: { slug: string } }> = async ({ params }) => {
   const { data } = await getClient()
@@ -9,11 +12,10 @@ const BlogViewPage: NextPage<{ params: { slug: string } }> = async ({ params }) 
       {
         query: GetPostDocument,
         variables: { slug: params.slug },
-        fetchPolicy: 'network-only',
       })
 
   return (
-    <div>BlogViewPage: {data?.post?.content}</div>
+    <Markdown className='prose lg:prose-xl' remarkPlugins={[remarkGfm, remarkToc]}>{data?.post?.content}</Markdown>
   )
 }
 

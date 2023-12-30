@@ -69,15 +69,16 @@ type Post implements Node & TimeStamps {
   updatedAt: DateTime!
   title: String!
   slug: String
+  coverPhotoURL: String
   content: String!
   author: User!
   publishedAt: DateTime!
 }
 
 input SearchPostsInput {
-  userId: ID!
-  limit: Float = 10
-  offset: Float = 0
+  userId: ID
+  limit: Float! = 10
+  offset: Float! = 0
 }
 
 type Mutation {
@@ -118,6 +119,9 @@ input CreatePostInput {
 
   """Slug of the post. This will be used as a Human-readable ID"""
   slug: String!
+
+  """Cover photo of the post"""
+  coverPhotoURL: String!
 }
 
 input UpdatePostInput {
@@ -129,5 +133,8 @@ input UpdatePostInput {
 
   """Slug of the post. This will be used as a Human-readable ID"""
   slug: String
+
+  """Cover photo of the post"""
+  coverPhotoURL: String
   id: ID!
 }

@@ -31,11 +31,13 @@ export class PostService {
   }
 
   async findAll(searchPostInput: SearchPostsInput) {
-    const posts = await this.postModel.find(searchPostInput).sort({
+    const posts = await this.postModel.find({
+      ...searchPostInput?.userId && { author: searchPostInput?.userId }
+    }).sort({
       _id: 'descending',
     })
-      .limit(searchPostInput.limit)
-      .skip(searchPostInput.offset)
+      .limit(searchPostInput?.limit)
+      .skip(searchPostInput?.offset)
     return posts
   }
 

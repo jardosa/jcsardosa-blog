@@ -19,6 +19,10 @@ export class Post extends Node {
   slug?: string;
 
   @Prop()
+  @Field({ nullable: true, defaultValue: 'https://hips.hearstapps.com/hmg-prod/images/alpe-di-siusi-sunrise-with-sassolungo-or-langkofel-royalty-free-image-1623254127.jpg' })
+  coverPhotoURL?: string
+
+  @Prop()
   @Field()
   content: string;
 

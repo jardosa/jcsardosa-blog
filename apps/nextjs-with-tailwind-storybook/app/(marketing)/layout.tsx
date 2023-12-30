@@ -1,8 +1,9 @@
-import { getClient } from '@nx-nextjs-tailwind-storybook/feature'
+import { ApolloWrapper, getClient } from '@nx-nextjs-tailwind-storybook/feature'
 import { PingDocument } from '@nx-nextjs-tailwind-storybook/data-access'
 import '../styles.css'
 import '@mantine/core/styles.css';
 import MantineProviderWrapper from 'libs/feature/src/lib/MantineProvider'
+import MainMenu from 'libs/ui/src/lib/MainMenu/MainMenu';
 
 export const metadata = {
   title: 'Create Next App',
@@ -18,12 +19,25 @@ export default async function RootLayout({
 }) {
   const { data } = await getClient().query({ query: PingDocument })
   console.log({ data })
+  const leftSideItems = [{
+    label: "Blog",
+    href: "/blog"
+  }]
+  const rightSideItems = [{
+    label: "About",
+    href: "/about"
+  }]
   return (
     <html lang={params.lang} className='light'>
       <body className='font-sans'>
-        <MantineProviderWrapper>
-          {children}
-        </MantineProviderWrapper>
+        <ApolloWrapper>
+          <MantineProviderWrapper>
+            <MainMenu
+              logo='https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg'
+              leftSideItems={leftSideItems} rightSideItems={rightSideItems} />
+            {children}
+          </MantineProviderWrapper>
+        </ApolloWrapper>
       </body>
     </html>
   )
