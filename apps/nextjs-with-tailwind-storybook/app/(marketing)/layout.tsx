@@ -28,17 +28,13 @@ export default async function RootLayout({
     href: "/about"
   }]
   return (
-    <html lang={params.lang} className='light'>
-      <body className='font-sans'>
-        <ApolloWrapper>
-          <MantineProviderWrapper>
-            <MainMenu
-              logo='https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg'
-              leftSideItems={leftSideItems} rightSideItems={rightSideItems} />
-            {children}
-          </MantineProviderWrapper>
-        </ApolloWrapper>
-      </body>
-    </html>
+    <ApolloWrapper>
+      <MantineProviderWrapper>
+        <MainMenu
+          logo='https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg'
+          leftSideItems={leftSideItems} rightSideItems={rightSideItems} />
+        {children}
+      </MantineProviderWrapper>
+    </ApolloWrapper>
   )
 }

@@ -6,14 +6,17 @@ export class CreatePostInput implements Pick<Post, 'title' | 'content' | 'slug' 
   @Field(() => String, { description: 'Title of post' })
   title: string;
 
+  @Field(() => String, { description: 'Tagline of the post', nullable: true })
+  tagline?: string;
+
   @Field(() => String, { description: 'Content of post' })
   content: string;
 
   @Field(() => String, { description: 'Slug of the post. This will be used as a Human-readable ID' })
   slug: string;
 
-  @Field(() => String, { description: 'Cover photo of the post' })
-  coverPhotoURL: string;
+  @Field(() => String, { description: 'Cover photo of the post', nullable: true })
+  coverPhotoURL?: string;
 
   author: string;
 }

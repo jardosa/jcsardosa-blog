@@ -2,7 +2,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
-export type AuthorFieldsFragment = { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string };
+export type AuthorFieldsFragment = { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string, profilePhotoURL: string };
 
 export const AuthorFieldsFragmentDoc = gql`
     fragment authorFields on User {
@@ -11,5 +11,6 @@ export const AuthorFieldsFragmentDoc = gql`
   email
   createdAt
   updatedAt
+  profilePhotoURL
 }
     `;

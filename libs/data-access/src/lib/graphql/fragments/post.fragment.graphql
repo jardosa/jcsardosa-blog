@@ -1,10 +1,17 @@
 #import  './author.fragment.graphql'
 
 fragment postFields on Post {
+  _id
   title
   content
+  tagline
   createdAt
   updatedAt
+  slug
+  coverPhotoURL
+  publishedAt
+  status
+  category
   author {
     ...authorFields
   }

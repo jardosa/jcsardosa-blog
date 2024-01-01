@@ -15,13 +15,24 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+/** Category of the post */
+export enum Category {
+  Automotive = 'AUTOMOTIVE',
+  LifeUpdate = 'LIFE_UPDATE',
+  OutdoorAndTravel = 'OUTDOOR_AND_TRAVEL',
+  SoftwareDevelopment = 'SOFTWARE_DEVELOPMENT',
+  Tech = 'TECH'
+}
+
 export type CreatePostInput = {
   /** Content of post */
   content: Scalars['String']['input'];
   /** Cover photo of the post */
-  coverPhotoURL: Scalars['String']['input'];
+  coverPhotoURL?: InputMaybe<Scalars['String']['input']>;
   /** Slug of the post. This will be used as a Human-readable ID */
   slug: Scalars['String']['input'];
+  /** Tagline of the post */
+  tagline?: InputMaybe<Scalars['String']['input']>;
   /** Title of post */
   title: Scalars['String']['input'];
 };
@@ -107,11 +118,14 @@ export type Post = Node & TimeStamps & {
   __typename?: 'Post';
   _id: Scalars['ID']['output'];
   author: User;
+  category: Category;
   content: Scalars['String']['output'];
   coverPhotoURL?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
-  publishedAt: Scalars['DateTime']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
+  status: Status;
+  tagline: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -145,7 +159,7 @@ export type QueryPostArgs = {
 
 
 export type QueryPostsArgs = {
-  searchInput?: InputMaybe<SearchPostsInput>;
+  searchInput: SearchPostsInput;
 };
 
 
@@ -159,8 +173,8 @@ export type QueryUsersArgs = {
 };
 
 export type SearchPostsInput = {
-  limit?: InputMaybe<Scalars['Float']['input']>;
-  offset?: InputMaybe<Scalars['Float']['input']>;
+  limit?: Scalars['Float']['input'];
+  offset?: Scalars['Float']['input'];
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -178,6 +192,16 @@ export type SearchUsersInput = {
   offset?: InputMaybe<Scalars['Float']['input']>;
 };
 
+/** Status of the post */
+export enum Status {
+  /** Post has been archived but not deleted. */
+  Archived = 'ARCHIVED',
+  /** Post has not been published */
+  Draft = 'DRAFT',
+  /** Post has been published */
+  Published = 'PUBLISHED'
+}
+
 export type TimeStamps = {
   createdAt: Scalars['DateTime']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -191,6 +215,8 @@ export type UpdatePostInput = {
   id: Scalars['ID']['input'];
   /** Slug of the post. This will be used as a Human-readable ID */
   slug?: InputMaybe<Scalars['String']['input']>;
+  /** Tagline of the post */
+  tagline?: InputMaybe<Scalars['String']['input']>;
   /** Title of post */
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -210,5 +236,6 @@ export type User = Node & TimeStamps & {
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
+  profilePhotoURL: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };

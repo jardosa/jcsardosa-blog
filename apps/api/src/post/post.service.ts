@@ -2,7 +2,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { InjectModel } from '@nestjs/mongoose';
-import { Post, PostDocument } from './schema/post.schema';
+import { Post, PostDocument, Status } from './schema/post.schema';
 import { Model, Types } from 'mongoose';
 import { SearchPostsInput } from './dto/search-posts.input';
 import slugify from 'slugify'
@@ -25,6 +25,7 @@ export class PostService {
     const createdpost = new this.postModel({
       ...createPostInput,
       author: new Types.ObjectId(createPostInput.author),
+      status: Status.DRAFT
     });
 
     return (await createdpost.save()).toObject();

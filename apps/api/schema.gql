@@ -47,6 +47,7 @@ type User implements Node & TimeStamps {
   firstName: String!
   lastName: String!
   email: String!
+  profilePhotoURL: String!
 }
 
 input SearchUsersInput {
@@ -72,7 +73,31 @@ type Post implements Node & TimeStamps {
   coverPhotoURL: String
   content: String!
   author: User!
-  publishedAt: DateTime!
+  status: Status!
+  publishedAt: DateTime
+  tagline: String!
+  category: Category!
+}
+
+"""Status of the post"""
+enum Status {
+  """Post has not been published"""
+  DRAFT
+
+  """Post has been published"""
+  PUBLISHED
+
+  """Post has been archived but not deleted."""
+  ARCHIVED
+}
+
+"""Category of the post"""
+enum Category {
+  OUTDOOR_AND_TRAVEL
+  AUTOMOTIVE
+  TECH
+  SOFTWARE_DEVELOPMENT
+  LIFE_UPDATE
 }
 
 input SearchPostsInput {
@@ -114,6 +139,9 @@ input CreatePostInput {
   """Title of post"""
   title: String!
 
+  """Tagline of the post"""
+  tagline: String
+
   """Content of post"""
   content: String!
 
@@ -121,12 +149,15 @@ input CreatePostInput {
   slug: String!
 
   """Cover photo of the post"""
-  coverPhotoURL: String!
+  coverPhotoURL: String
 }
 
 input UpdatePostInput {
   """Title of post"""
   title: String
+
+  """Tagline of the post"""
+  tagline: String
 
   """Content of post"""
   content: String

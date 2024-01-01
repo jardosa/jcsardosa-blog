@@ -23,6 +23,10 @@ export class User extends Node {
 
   @Prop()
   password: string;
+
+  @Prop()
+  @Field({ defaultValue: 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg' })
+  profilePhotoURL?: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
