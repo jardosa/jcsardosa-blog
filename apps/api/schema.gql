@@ -9,6 +9,7 @@ type Profile implements Node & TimeStamps {
   firstName: String
   lastName: String
   email: String!
+  profilePhotoURL: String!
 }
 
 interface Node {

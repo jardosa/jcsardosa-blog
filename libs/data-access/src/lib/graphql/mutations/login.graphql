@@ -1,0 +1,10 @@
+#import  '../fragments/post.fragment.graphql'
+
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    authToken
+    profile {
+      ...profileFields
+    }
+  }
+}

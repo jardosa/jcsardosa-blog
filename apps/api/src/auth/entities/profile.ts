@@ -18,4 +18,7 @@ export default class Profile extends Node implements TimeStamps {
 
   @Field()
   updatedAt: Date;
+
+  @Field({ defaultValue: 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg' })
+  profilePhotoURL?: string;
 }

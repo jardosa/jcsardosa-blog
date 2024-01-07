@@ -1,0 +1,9 @@
+fragment profileFields on Profile {
+  _id
+  firstName
+  lastName
+  email
+  createdAt
+  updatedAt
+  profilePhotoURL
+}

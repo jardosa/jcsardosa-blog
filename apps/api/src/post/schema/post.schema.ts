@@ -78,7 +78,7 @@ export class Post extends Node {
   tagline: string;
 
   @Prop()
-  @Field(() => Category)
+  @Field(() => Category, { defaultValue: Category.LIFE_UPDATE })
   category: Category
 }
 

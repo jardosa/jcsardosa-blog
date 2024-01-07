@@ -137,6 +137,7 @@ export type Profile = Node & TimeStamps & {
   email: Scalars['String']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
+  profilePhotoURL: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 

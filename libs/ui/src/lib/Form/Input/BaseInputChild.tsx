@@ -38,6 +38,7 @@ const baseInputChild = cva(['py-2 px-3',
       md: ['max-w-[240px]'],
       lg: ['max-w-[320px]'],
       xl: ['max-w-[560px]'],
+      full: ['max-w-none'],
     }
   },
   defaultVariants: {
@@ -82,7 +83,7 @@ const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ c
       <div className="flex">
         {prefix && <BasePrefix type={prefix.type} label={prefix.label} onClick={prefix.onClick} />}
 
-        <div className="relative flex items-center">
+        <div className="relative flex items-center flex-1">
           <input
             ref={ref}
             value={value}

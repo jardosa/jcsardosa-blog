@@ -1,14 +1,14 @@
 'use client'
 
-import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { FindPostsDocument, FindPostsQuery, PingDocument, PingQuery, Post, useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
+import { Post, useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
+import Loading from 'libs/ui/src/lib/Loading/Loading'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { FC } from 'react'
 
-const BlogSnippet: FC<{ post: FindPostsQuery['posts'][number] }> = ({ post }) => {
+const BlogSnippet: FC<{ post: Post }> = ({ post }) => {
 
-  return <div className='outline outline-1 rounded-sm flex m-5 gap-3'>
+  return <div className='outline outline-1 outline-neutral-200 rounded-sm flex m-5 gap-3'>
     <div>
       <Image height={200} width={200} src={post.coverPhotoURL as string} alt={post.title} />
     </div>
@@ -22,9 +22,9 @@ const BlogSnippet: FC<{ post: FindPostsQuery['posts'][number] }> = ({ post }) =>
   </div>
 }
 
-const BlogList: FC<{ posts: FindPostsQuery['posts'] }> = ({ posts }) => {
+const BlogList: FC<{ posts: Post[] }> = ({ posts }) => {
   return <div>
-    {posts?.map((post) => <BlogSnippet post={post} />)}
+    {posts?.map((post: Post) => <BlogSnippet post={post} />)}
   </div>
 }
 
@@ -32,11 +32,11 @@ const BlogListPage = () => {
   const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0 } } })
 
 
-  if (loading || !data?.posts) return <div>Loading</div>
-  console.log(data)
+  if (loading || !data?.posts) return <Loading />
+
   return (
     <div className='text-2xl'>
-      <BlogList posts={data?.posts} />
+      <BlogList posts={data?.posts as Post[]} />
 
     </div>
   )

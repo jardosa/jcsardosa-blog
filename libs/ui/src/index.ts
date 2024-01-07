@@ -5,4 +5,7 @@ export * from './lib/AvatarDetails/AvatarDetails';
 export * from './lib/AvatarGroup/AvatarGroup';
 export * from './lib/AvatarStacked/AvatarStacked';
 export * from './lib/MainMenu/MainMenu';
+export * from './lib/Form/Input/Input';
+export * from './lib/Form/Input/InputPassword';
+export * from './lib/Loading/Loading';
 export * from './lib/ui';
