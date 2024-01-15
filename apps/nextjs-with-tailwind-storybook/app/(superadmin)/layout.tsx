@@ -2,7 +2,7 @@ import { ApolloWrapper } from '@nx-nextjs-tailwind-storybook/feature'
 import '../styles.css'
 import '@mantine/core/styles.css';
 import MantineProviderWrapper from 'libs/feature/src/lib/MantineProvider'
-import MainMenu from 'libs/ui/src/lib/MainMenu/MainMenu';
+import MainMenu, { MainMenuProps } from 'libs/ui/src/lib/MainMenu/MainMenu';
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,15 +15,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
   params: { lang: string }
-  }) {
-  const leftSideItems = [{
-    label: "Blog",
-    href: "/blog"
-  }]
-  const rightSideItems = [{
-    label: "About",
-    href: "/about"
-  }]
+}) {
+  const leftSideItems: MainMenuProps['leftSideItems'] = []
+  const rightSideItems: MainMenuProps['rightSideItems'] = []
   return (
     <ApolloWrapper>
       <MantineProviderWrapper>

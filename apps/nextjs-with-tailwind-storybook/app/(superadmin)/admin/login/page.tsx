@@ -50,8 +50,8 @@ const LoginPage = () => {
   return (
     <div className='grid place-items-center h-full w-full'>
       <form className='outline outline-1 rounded-md outline-slate-300 p-5' onSubmit={handleSubmit(onSubmit)}>
-        <InputText size={'full'} label='Email Address' {...register('email')} />
-        <InputPasswordText label='Password' {...register('password')} />
+        <InputText error={errors.email?.message} size={'full'} label='Email Address' {...register('email')} />
+        <InputPasswordText error={errors.password?.message} label='Password' {...register('password')} />
         <Button type='submit' category={"primary"} intent={"confirm"} label="Log In" />
       </form>
     </div>
