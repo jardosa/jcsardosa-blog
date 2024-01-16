@@ -6,7 +6,12 @@ const config: StorybookConfig = {
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
   ],
-  addons: ['@storybook/addon-essentials', '@storybook/addon-interactions'],
+  addons: [
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-styling-webpack',
+    'storybook-dark-mode',
+  ],
   webpackFinal: async (config) => {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
 
