@@ -2,6 +2,7 @@ import { getClient } from '@nx-nextjs-tailwind-storybook/feature'
 import { PingDocument } from '@nx-nextjs-tailwind-storybook/data-access'
 import './styles.css'
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 

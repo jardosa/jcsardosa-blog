@@ -38,6 +38,9 @@ dependencies:
   '@mantine/hooks':
     specifier: ^7.2.1
     version: 7.2.1(react@18.2.0)
+  '@mantine/notifications':
+    specifier: ^7.5.1
+    version: 7.5.1(@mantine/core@7.2.1)(@mantine/hooks@7.2.1)(react-dom@18.2.0)(react@18.2.0)
   '@nestjs/apollo':
     specifier: ^12.0.7
     version: 12.0.9(@apollo/server@4.9.4)(@nestjs/common@10.1.3)(@nestjs/core@10.1.3)(@nestjs/graphql@11.0.6)(graphql@16.8.1)
@@ -4034,6 +4037,30 @@ packages:
 
   /@mantine/hooks@7.2.1(react@18.2.0):
     resolution: {integrity: sha512-v7GKjVQ6SV6dQ+hrs6HDHB50UB+ZXS5hhGp1bo2k6QGF3wcndws+eghCFO5hjKIVSLYm2YoaZxwKiQmjsZBXfQ==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /@mantine/notifications@7.5.1(@mantine/core@7.2.1)(@mantine/hooks@7.2.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-IQDOAz+U9G6IkYXAXG9qL5EESmnhWV3JBJrxwBOPPdi1e9S/akQlsmABWS/voB9WFnOnbMbrkF067RVBA7W4dg==}
+    peerDependencies:
+      '@mantine/core': 7.5.1
+      '@mantine/hooks': 7.5.1
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@mantine/core': 7.2.1(@mantine/hooks@7.2.1)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.2.1(react@18.2.0)
+      '@mantine/store': 7.5.1(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /@mantine/store@7.5.1(react@18.2.0):
+    resolution: {integrity: sha512-sDaPXB3v9JlJghNTnRTFT2hC3HN6pdBcCXj0CqO/QrJgtRA7A3FxW+mnY7YQOaBxHJ1MIRr+zsv0Qy1f/pu1dw==}
     peerDependencies:
       react: ^18.2.0
     dependencies:

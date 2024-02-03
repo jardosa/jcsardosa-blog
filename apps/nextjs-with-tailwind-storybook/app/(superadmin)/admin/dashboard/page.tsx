@@ -6,15 +6,15 @@ const DashboardPage = () => {
 
   const items = [
     {
-      name: 'BlogPosts',
-      link: '/admin/blog',
+      label: 'BlogPosts',
+      href: '/admin/blog',
       icon: <BookOpenIcon className='w-full h-full' />
     }
   ]
 
   return (
     <div className='w-full h-screen grid place-items-center'>
-      {items.map(({ link, icon, name }) => <Link className='text-center' href={link}>
+      {items.map(({ href: link, icon, label: name }) => <Link className='text-center' href={link}>
         <div className='rounded-md w-28 h-28 outline outline-1 outline-neutral-100'>
           {icon}
         </div>

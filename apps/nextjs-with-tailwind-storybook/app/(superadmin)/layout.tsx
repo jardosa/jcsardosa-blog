@@ -2,7 +2,10 @@ import { ApolloWrapper } from '@nx-nextjs-tailwind-storybook/feature'
 import '../styles.css'
 import '@mantine/core/styles.css';
 import MantineProviderWrapper from 'libs/feature/src/lib/MantineProvider'
-import MainMenu, { MainMenuProps } from 'libs/ui/src/lib/MainMenu/MainMenu';
+import MainLayout from 'libs/ui/src/lib/MainLayout/MainLayout';
+import { NavLink } from '@mantine/core';
+import Link from 'next/link';
+import links, { bottomLinks } from './links';
 
 export const metadata = {
   title: 'Create Next App',
@@ -16,15 +19,24 @@ export default async function RootLayout({
   children: React.ReactNode
   params: { lang: string }
 }) {
-  const leftSideItems: MainMenuProps['leftSideItems'] = []
-  const rightSideItems: MainMenuProps['rightSideItems'] = []
+  const navItems = links.map(({ name, link, icon }) => {
+    return <NavLink component={Link} href={link} label={name} leftSection={icon} />
+  })
+
+  const bottomNavItems = bottomLinks.map(({ name, link, icon }) => {
+    return <NavLink component={Link} href={link} label={name} leftSection={icon} />
+  })
+
   return (
     <ApolloWrapper>
       <MantineProviderWrapper>
-        <MainMenu
-          logo='https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg'
-          leftSideItems={leftSideItems} rightSideItems={rightSideItems} />
-        {children}
+        <MainLayout
+          navItems={navItems}
+          bottomNavItems={bottomNavItems}
+          {...{ logo: 'https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg', }}
+        >
+          {children}
+        </MainLayout>
       </MantineProviderWrapper>
     </ApolloWrapper>
   )

@@ -73,7 +73,6 @@ const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ c
   error,
   size,
   validationText,
-  value,
   addon,
   success, ...props }, ref) => {
 
@@ -86,7 +85,7 @@ const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ c
         <div className="relative flex items-center flex-1">
           <input
             ref={ref}
-            value={value}
+            name={name}
             className={cn(baseInputChild({ className, isSearch, size, hasAddon: !!addon }),
               prefix && 'rounded-l-none',
               suffix && 'rounded-r-none',
@@ -95,6 +94,7 @@ const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ c
           </input>
           {isSearch && <MagnifyingGlassIcon className="absolute w-5 h-5 left-2 text-neutral-500" />}
           {addon && <Button
+            type="button"
             category={'tertiary'}
             onClick={() => addon.onClick()}
             buttonType="icon"
@@ -108,6 +108,7 @@ const BaseInputChild = forwardRef<ElementRef<'input'>, BaseInputChildProps>(({ c
       <div className={cn(
         'mt-2',
         'leading-4',
+        'text-xs',
         'text-neutral-500',
         error && 'text-ui-red-500',
         success && 'text-ui-green-500',

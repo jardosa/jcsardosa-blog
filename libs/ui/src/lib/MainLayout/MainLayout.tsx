@@ -2,14 +2,15 @@
 
 import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure, useHeadroom } from "@mantine/hooks";
-import { FC, PropsWithChildren, ReactElement } from "react";
+import { FC, PropsWithChildren, ReactElement, ReactNode } from "react";
 
 export interface MainLayoutProps extends PropsWithChildren {
   logo?: string
-  navItems?: ReactElement
+  navItems?: ReactElement | ReactNode
+  bottomNavItems?: ReactElement | ReactNode
 }
 
-const MainLayout: FC<MainLayoutProps> = ({ navItems, logo, children }) => {
+const MainLayout: FC<MainLayoutProps> = ({ navItems, logo, children, bottomNavItems }) => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] =
     useDisclosure();
@@ -35,8 +36,15 @@ const MainLayout: FC<MainLayoutProps> = ({ navItems, logo, children }) => {
           <img src={logo} width={60} height={60} />
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="sm">
-        {navItems}
+      <AppShell.Navbar p="sm" >
+        <div className="flex flex-col justify-between flex-1">
+          <div>
+            {navItems}
+          </div>
+          <div>
+            {bottomNavItems}
+          </div>
+        </div>
       </AppShell.Navbar>
 
       <AppShell.Main>{children}</AppShell.Main>

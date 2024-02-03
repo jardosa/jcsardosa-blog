@@ -8,6 +8,8 @@ import { useLoginMutation } from '@nx-nextjs-tailwind-storybook/data-access';
 import InputText from 'libs/ui/src/lib/Form/Input/Input';
 import InputPasswordText from 'libs/ui/src/lib/Form/Input/InputPassword';
 import Button from 'libs/ui/src/lib/Button/Button';
+import { notifications } from '@mantine/notifications';
+
 
 
 const LoginSchema = z.object({
@@ -17,7 +19,6 @@ const LoginSchema = z.object({
 
 type Login = z.infer<typeof LoginSchema>;
 
-
 const LoginPage = () => {
 
   const {
@@ -26,33 +27,47 @@ const LoginPage = () => {
     formState: { errors },
     setError,
     clearErrors,
-  } = useForm<Login>({ resolver: zodResolver(LoginSchema) });
+    watch,
+  } = useForm<Login>({ resolver: zodResolver(LoginSchema), mode: 'onSubmit' });
 
-  const [loginMutation] = useLoginMutation({
+  const [loginMutation, { loading }] = useLoginMutation({
     onCompleted(data) {
       localStorage.setItem('authToken', data.login.authToken)
       window.location.href = '/blog'
     },
     onError(err) {
-      setError('root.invalidCredentials', {
-        type: 'disabled',
-        message: err.message,
-      });
+      notifications.show({
+        title: 'Invalid Credentials',
+        message: 'Invalid Email or Password provided',
+        color: 'red',
+      })
     },
   });
 
   const onSubmit: SubmitHandler<Login> = (data) => {
     loginMutation({
-      variables: { email: data.email, password: data.password },
+      variables: { ...data },
     })
   };
 
   return (
     <div className='grid place-items-center h-full w-full'>
-      <form className='outline outline-1 rounded-md outline-slate-300 p-5' onSubmit={handleSubmit(onSubmit)}>
-        <InputText error={errors.email?.message} size={'full'} label='Email Address' {...register('email')} />
-        <InputPasswordText error={errors.password?.message} label='Password' {...register('password')} />
-        <Button type='submit' category={"primary"} intent={"confirm"} label="Log In" />
+      <form onChange={() => clearErrors()} className='outline outline-1 rounded-md outline-slate-300 p-5 space-y-2' onSubmit={handleSubmit(onSubmit)}>
+        <div className='space-y-2' >
+          <InputText
+            validationText={errors?.email?.message}
+            error={errors.email?.message}
+            size={'full'}
+            label='Email Address'
+            {...register('email')} />
+          <InputPasswordText
+            validationText={errors?.password?.message}
+            error={errors.password?.message}
+            label='Password'
+            {...register('password')} />
+        </div>
+        {/* <div className='text-ui-red-400 text-xs'>{errors.root?.invalidCredentials.message}</div> */}
+        <Button disabled={loading} type='submit' category={"primary"} intent={"confirm"} label="Log In" />
       </form>
     </div>
   )
