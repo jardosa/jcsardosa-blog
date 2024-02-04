@@ -10,8 +10,6 @@ import InputPasswordText from 'libs/ui/src/lib/Form/Input/InputPassword';
 import Button from 'libs/ui/src/lib/Button/Button';
 import { notifications } from '@mantine/notifications';
 
-
-
 const LoginSchema = z.object({
   email: z.string().min(1, { message: 'Email Required' }).email(),
   password: z.string().min(1, { message: 'Password Required' }),

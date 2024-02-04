@@ -3,7 +3,7 @@ import '../styles.css'
 import '@mantine/core/styles.css';
 import MantineProviderWrapper from 'libs/feature/src/lib/MantineProvider'
 import MainLayout from 'libs/ui/src/lib/MainLayout/MainLayout'
-import links from './links';
+import links, { bottomLinks } from './links';
 import { NavLink } from '@mantine/core';
 import Link from 'next/link';
 
@@ -24,11 +24,16 @@ export default async function RootLayout({
   const navItems = links.map(({ name, link, icon }) => {
     return <NavLink component={Link} href={link} label={name} leftSection={icon} />
   })
+  const bottomNavItems = bottomLinks.map(({ name, link, icon }) => {
+    return <NavLink component={Link} href={link} label={name} leftSection={icon} />
+  })
+
   return (
     <ApolloWrapper>
       <MantineProviderWrapper>
         <MainLayout
           navItems={navItems}
+          bottomNavItems={bottomNavItems}
           {...{ logo: 'https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg', }}
         >
           {children}

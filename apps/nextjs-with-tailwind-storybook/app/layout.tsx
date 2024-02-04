@@ -1,4 +1,4 @@
-import { getClient } from '@nx-nextjs-tailwind-storybook/feature'
+import { ApolloWrapper, getClient } from '@nx-nextjs-tailwind-storybook/feature'
 import { PingDocument } from '@nx-nextjs-tailwind-storybook/data-access'
 import './styles.css'
 import '@mantine/core/styles.css';
@@ -25,9 +25,11 @@ export default async function RootLayout({
     <html lang={params.lang} className='light'>
       <head><ColorSchemeScript /></head>
       <body className='font-sans'>
-        <MantineProvider>
-          {children}
-        </MantineProvider>
+        <ApolloWrapper>
+          <MantineProvider>
+            {children}
+          </MantineProvider>
+        </ApolloWrapper>
       </body>
     </html>
   )
