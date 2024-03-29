@@ -17,7 +17,7 @@ const links: { name: string, link: string, icon: ReactElement | ReactNode }[] = 
 export const bottomLinks: { name: string, link: string, icon: ReactElement | ReactNode }[] = [
   {
     name: 'Log Out',
-    link: '/admin/logout',
+    link: '/logout',
     icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" />
   }
 ]

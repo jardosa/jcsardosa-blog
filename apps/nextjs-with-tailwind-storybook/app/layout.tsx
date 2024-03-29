@@ -1,11 +1,9 @@
-import { ApolloWrapper, getClient } from '@nx-nextjs-tailwind-storybook/feature'
-import { PingDocument } from '@nx-nextjs-tailwind-storybook/data-access'
+import { ApolloWrapper, AuthWrapper } from '@nx-nextjs-tailwind-storybook/feature'
 import './styles.css'
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
-
 
 export const metadata = {
   title: 'Create Next App',
@@ -19,15 +17,16 @@ export default async function RootLayout({
   children: React.ReactNode
   params: { lang: string }
 }) {
-  // const { data } = await getClient().query({ query: PingDocument })
-  // console.log({ data })
+
   return (
     <html lang={params.lang} className='light'>
       <head><ColorSchemeScript /></head>
       <body className='font-sans'>
         <ApolloWrapper>
           <MantineProvider>
-            {children}
+            <AuthWrapper>
+              {children}
+            </AuthWrapper>
           </MantineProvider>
         </ApolloWrapper>
       </body>

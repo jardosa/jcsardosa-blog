@@ -9,6 +9,7 @@ import InputText from 'libs/ui/src/lib/Form/Input/Input';
 import InputPasswordText from 'libs/ui/src/lib/Form/Input/InputPassword';
 import Button from 'libs/ui/src/lib/Button/Button';
 import { notifications } from '@mantine/notifications';
+import { setCookie } from 'cookies-next'
 
 const LoginSchema = z.object({
   email: z.string().min(1, { message: 'Email Required' }).email(),
@@ -30,7 +31,7 @@ const LoginPage = () => {
 
   const [loginMutation, { loading }] = useLoginMutation({
     onCompleted(data) {
-      localStorage.setItem('authToken', data.login.authToken)
+      setCookie('authToken', data.login.authToken)
       window.location.href = '/blog'
     },
     onError(err) {
