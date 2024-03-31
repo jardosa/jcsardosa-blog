@@ -3,24 +3,24 @@ import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument, Status } from './schema/post.schema';
-import { Model, Types } from 'mongoose';
+import { Model, SortOrder, Types } from 'mongoose';
 import { SearchPostsInput } from './dto/search-posts.input';
-import slugify from 'slugify'
 
 @Injectable()
 export class PostService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) { }
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {
+  }
 
   async checkSlugValidity(slug: string) {
-    const existingSlugRecord = await this.postModel.findOne({ slug })
+    const existingSlugRecord = await this.postModel.findOne({ slug });
     if (existingSlugRecord) {
-      throw new UnprocessableEntityException("Slug already taken")
+      throw new UnprocessableEntityException('Slug already taken');
     }
   }
 
   async create(createPostInput: CreatePostInput) {
 
-    await this.checkSlugValidity(createPostInput.slug)
+    await this.checkSlugValidity(createPostInput.slug);
 
     const createdpost = new this.postModel({
       ...createPostInput,
@@ -32,37 +32,44 @@ export class PostService {
   }
 
   async findAll(searchPostInput: SearchPostsInput) {
-    const posts = await this.postModel.find({
-      ...searchPostInput?.userId && { author: searchPostInput?.userId }
+    const {
+      sortBy,
+      orderBy,
+      limit,
+      offset,
+      ...query
+    } = searchPostInput;
+
+    return this.postModel.find({
+      ...query
     }).sort({
-      _id: 'descending',
+      [sortBy]: orderBy as SortOrder
     })
-      .limit(searchPostInput?.limit)
-      .skip(searchPostInput?.offset)
-    return posts
+      .limit(limit)
+      .skip(offset);
   }
 
   async findOne(id: string): Promise<Post | null> {
-    const post = await this.postModel.findById(id) || null
+    const post = await this.postModel.findById(id) || null;
     return post;
   }
 
   async findOneBySlug(slug: string): Promise<Post | null> {
-    const post = await this.postModel.findOne({ slug }) || null
-    return post
+    const post = await this.postModel.findOne({ slug }) || null;
+    return post;
   }
 
   async update(
     _id: string,
-    updatePostInput: UpdatePostInput,
+    updatePostInput: UpdatePostInput
   ): Promise<PostDocument> {
     if (updatePostInput.slug) {
-      await this.checkSlugValidity(updatePostInput.slug)
+      await this.checkSlugValidity(updatePostInput.slug);
     }
     const updatedPost = await this.postModel.findByIdAndUpdate(
       _id,
       updatePostInput,
-      { new: true },
+      { new: true }
     );
 
     return updatedPost;

@@ -102,9 +102,20 @@ enum Category {
 }
 
 input SearchPostsInput {
-  userId: ID
-  limit: Float! = 10
-  offset: Float! = 0
+  limit: Float = 10
+  offset: Float = 0
+  sortBy: String = "desc"
+  author: ID
+  orderBy: String
+  _id: String
+  category: Category
+  content: String
+  coverPhotoURL: String
+  publishedAt: DateTime
+  slug: String
+  status: Status
+  tagline: String
+  title: String
 }
 
 type Mutation {

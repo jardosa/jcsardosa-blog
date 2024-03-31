@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import TimeStamps from '../../common/entities/timestamps';
@@ -43,6 +43,7 @@ registerEnumType(Category, {
 });
 
 @ObjectType({ isAbstract: true, implements: [Node, TimeStamps] })
+@InputType({isAbstract: true})
 @Schema({ timestamps: true })
 export class Post extends Node {
   @Prop()
