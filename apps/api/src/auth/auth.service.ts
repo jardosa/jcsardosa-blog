@@ -23,21 +23,26 @@ export class AuthService {
   }
 
   async register(input: CreateUserInput): Promise<LoginPayload> {
-    const { email, firstName, lastName, password } = input;
+    const { email, firstName, lastName, password, handle } = input;
 
     const isEmailValid = validateEmail(email);
 
     if (!isEmailValid) throw new UserInputError('Email Address invalid');
 
     const existingUser = await this.userService.doesEmailExist(email);
+    const existingHandle: boolean = await this.userService.doesHandleExist(handle);
 
     if (existingUser) {
       throw new UserInputError('Email address has already been taken!');
+    }
+    if (existingHandle) {
+      throw new UserInputError('Handle has already been taken!');
     }
 
     const hashedPassword = await this.hashPassword(password);
     const newUser = await this.userService.create({
       email,
+      handle,
       firstName,
       lastName,
       password: hashedPassword,

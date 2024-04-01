@@ -7,11 +7,12 @@ import LoginPayload from './entities/loginPayload';
 import { CurrentUser } from './decorators/currentUser.decorator';
 
 import { GqlAuthGuard } from './guards/gqlAuth.guard';
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, UsePipes } from '@nestjs/common';
 import { AuthenticationError } from '@nestjs/apollo';
-import { CreateUserInput } from '../user/dto/create-user.input';
+import { CreateUserInput, createUserSchema } from '../user/dto/create-user.input';
 import { User } from '../user/schema/user.schema';
 import { UserService } from '../user/user.service';
+import { ZodValidationPipe } from '../common/pipes/zodValidation.pipe';
 
 @Resolver()
 export class AuthResolver {
@@ -21,6 +22,7 @@ export class AuthResolver {
   ) { }
 
   @Mutation(() => LoginPayload)
+  @UsePipes(new ZodValidationPipe(createUserSchema))
   register(@Args('registerInput') registerInput: CreateUserInput) {
     return this.authService.register(registerInput);
   }

@@ -47,6 +47,7 @@ type User implements Node & TimeStamps {
   updatedAt: DateTime!
   firstName: String!
   lastName: String!
+  handle: String!
   email: String!
   profilePhotoURL: String!
 }
@@ -134,6 +135,7 @@ type Mutation {
 
 input CreateUserInput {
   firstName: String!
+  handle: String!
   lastName: String!
   email: String!
   password: String!
@@ -141,6 +143,7 @@ input CreateUserInput {
 
 input UpdateUserInput {
   firstName: String
+  handle: String
   lastName: String
   email: String
   password: String

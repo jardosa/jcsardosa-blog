@@ -34,6 +34,12 @@ export class UserService {
     return true;
   }
 
+  async doesHandleExist(handle: string): Promise<boolean> {
+    const user = await this.userModel.findOne({ handle });
+    if (!user) return false;
+    return true;
+  }
+
   async findOne(searchFields: SearchUserInput): Promise<UserDocument> {
     if (!Object.keys(searchFields).length) {
       throw new UserInputError('Provide at least 1 search criteria');

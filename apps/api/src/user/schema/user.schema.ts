@@ -12,10 +12,14 @@ export class User extends Node {
   @Prop()
   @Field()
   firstName: string;
-
+  
   @Prop()
   @Field()
   lastName: string;
+
+  @Prop()
+  @Field()
+  handle: string;
 
   @Prop()
   @Field()
@@ -26,7 +30,7 @@ export class User extends Node {
 
   @Prop()
   @Field({ defaultValue: 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg' })
-  profilePhotoURL?: string
+  profilePhotoURL?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
