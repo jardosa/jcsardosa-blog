@@ -20,11 +20,11 @@ export default async function RootLayout({
   params: { lang: string }
 }) {
   const navItems = links.map(({ name, link, icon }) => {
-    return <NavLink component={Link} href={link} label={name} leftSection={icon} />
+    return <NavLink key={link} component={Link} href={link} label={name} leftSection={icon} />
   })
 
   const bottomNavItems = bottomLinks.map(({ name, link, icon }) => {
-    return <NavLink component={Link} href={link} label={name} leftSection={icon} />
+    return <NavLink key={link} component={Link} href={link} label={name} leftSection={icon} />
   })
 
   return (
