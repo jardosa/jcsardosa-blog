@@ -4,6 +4,7 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { cookies } from 'next/headers';
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,12 +18,13 @@ export default async function RootLayout({
   children: React.ReactNode
   params: { lang: string }
 }) {
+  const authToken = cookies().get('authToken')
 
   return (
     <html lang={params.lang} className='light'>
       <head><ColorSchemeScript /></head>
       <body className='font-sans'>
-        <ApolloWrapper>
+        <ApolloWrapper authToken={authToken?.value as string}>
           <MantineProvider>
             <AuthWrapper>
               {children}

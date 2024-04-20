@@ -19,7 +19,7 @@ export class PostResolver {
   ) { }
 
   @Mutation(() => Post)
-  @UseGuards(GqlAuthGuard)
+    @UseGuards(GqlAuthGuard)
   async createPost(
     @CurrentUser() user: User,
     @Args('createPostInput') createPostInput: CreatePostInput

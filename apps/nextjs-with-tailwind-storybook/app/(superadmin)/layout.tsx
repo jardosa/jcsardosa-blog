@@ -6,6 +6,7 @@ import MainLayout from 'libs/ui/src/lib/MainLayout/MainLayout';
 import { NavLink } from '@mantine/core';
 import Link from 'next/link';
 import links, { bottomLinks } from './links';
+import { cookies } from 'next/headers';
 
 export const metadata = {
   title: 'Create Next App',
@@ -18,7 +19,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
   params: { lang: string }
+
 }) {
+  const authToken = cookies().get('authToken')
   const navItems = links.map(({ name, link, icon }) => {
     return <NavLink key={link} component={Link} href={link} label={name} leftSection={icon} />
   })
@@ -28,7 +31,7 @@ export default async function RootLayout({
   })
 
   return (
-    <ApolloWrapper>
+    <ApolloWrapper authToken={authToken?.value as string}>
       <MantineProviderWrapper>
         <MainLayout
           navItems={navItems}

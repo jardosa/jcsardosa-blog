@@ -25,6 +25,8 @@ export enum Category {
 }
 
 export type CreatePostInput = {
+  /** Category of post */
+  category: Category;
   /** Content of post */
   content: Scalars['String']['input'];
   /** Cover photo of the post */
@@ -40,6 +42,7 @@ export type CreatePostInput = {
 export type CreateUserInput = {
   email: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
+  handle: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
@@ -174,9 +177,20 @@ export type QueryUsersArgs = {
 };
 
 export type SearchPostsInput = {
-  limit?: Scalars['Float']['input'];
-  offset?: Scalars['Float']['input'];
-  userId?: InputMaybe<Scalars['ID']['input']>;
+  _id?: InputMaybe<Scalars['String']['input']>;
+  author?: InputMaybe<Scalars['ID']['input']>;
+  category?: InputMaybe<Category>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  coverPhotoURL?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  sortBy?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Status>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SearchUserInput = {
@@ -209,6 +223,8 @@ export type TimeStamps = {
 };
 
 export type UpdatePostInput = {
+  /** Category of post */
+  category?: InputMaybe<Category>;
   /** Content of post */
   content?: InputMaybe<Scalars['String']['input']>;
   /** Cover photo of the post */
@@ -226,6 +242,7 @@ export type UpdateUserInput = {
   _id: Scalars['ID']['input'];
   email?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
+  handle?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
 };
@@ -236,6 +253,7 @@ export type User = Node & TimeStamps & {
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
+  handle: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   profilePhotoURL: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];

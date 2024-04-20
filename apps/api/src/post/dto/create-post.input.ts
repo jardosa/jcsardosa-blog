@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { Post } from '../schema/post.schema';
+import { Category, Post } from '../schema/post.schema';
 
 @InputType()
 export class CreatePostInput implements Pick<Post, 'title' | 'content' | 'slug' | 'coverPhotoURL'> {
@@ -11,6 +11,9 @@ export class CreatePostInput implements Pick<Post, 'title' | 'content' | 'slug' 
 
   @Field(() => String, { description: 'Content of post' })
   content: string;
+
+  @Field(() => Category, { description: 'Category of post' })
+  category: Category;
 
   @Field(() => String, { description: 'Slug of the post. This will be used as a Human-readable ID' })
   slug: string;
