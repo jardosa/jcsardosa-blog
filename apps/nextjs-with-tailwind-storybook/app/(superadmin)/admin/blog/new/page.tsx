@@ -1,8 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Input, TextInput, Textarea, Radio, Group } from '@mantine/core';
-import { Category, useCreatePostMutation } from '@nx-nextjs-tailwind-storybook/data-access';
+import { Button, TextInput, Textarea, Radio, Group } from '@mantine/core';
+import { Category, useCreatePostMutation, PostFieldsFragmentDoc } from '@nx-nextjs-tailwind-storybook/data-access';
 import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -28,8 +28,39 @@ type NewBlog = z.infer<typeof NewBlogSchema>;
 
 const NewBlogPage = () => {
 
-  const [createPost] = useCreatePostMutation();
+  const defaultValues = {
+    category: Category.Automotive,
+    content: '',
+    title: '',
+    tagline: '',
+    coverPhotoURL: ''
+  }
+
+  const [createPost] = useCreatePostMutation({
+    onCompleted: () => {
+      notifications.show({ color: 'green', title: 'Success', message: 'Blog post has been created' });
+      reset(defaultValues)
+    },
+    onError: () => {
+      notifications.show({ color: 'red', title: 'Failed', message: 'Error occurred while creating blog post' });
+    },
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          posts(existingPosts = []) {
+            const newPostRef = cache.writeFragment({
+              data: data?.createPost,
+              fragment: PostFieldsFragmentDoc,
+              fragmentName: 'postFields'
+            });
+            return [...existingPosts, newPostRef];
+          }
+        }
+      })
+    }
+  });
   const {
+    reset,
     control,
     handleSubmit,
     register,
@@ -37,23 +68,14 @@ const NewBlogPage = () => {
     formState: { errors }
   } = useForm<NewBlog>({
     resolver: zodResolver(NewBlogSchema),
-    mode: 'onSubmit'
+    mode: 'onSubmit',
+    defaultValues,
   });
 
   const onSubmit: SubmitHandler<NewBlog> = (data) => {
     const slug = data.title.toLowerCase().split(' ').join('-');
     createPost({
-      variables: {
-        createPostInput: {
-          ...data,
-          slug
-        }
-      }, onCompleted: () => {
-        notifications.show({ color: 'green', title: 'Success', message: 'Blog post has been created' });
-      }, onError:  () => {
-        notifications.show({  color: 'red', title: 'Failed', message: 'Error occurred while creating blog post' });
-
-      }
+      variables: { createPostInput: { ...data, slug } }
     });
   };
 
