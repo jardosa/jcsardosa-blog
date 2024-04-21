@@ -46,6 +46,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "react": "18.2.0",
+    "react-ace": "^11.0.1",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.49.2",

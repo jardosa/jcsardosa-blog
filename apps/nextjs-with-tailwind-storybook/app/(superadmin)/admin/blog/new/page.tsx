@@ -9,6 +9,14 @@ import { z } from 'zod';
 import { startCase } from 'lodash';
 import { notifications } from '@mantine/notifications';
 
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import remarkToc from "remark-toc";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-markdown";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/ext-language_tools";
+
 
 const NewBlogSchema = z.object({
   title: z.string().min(8),
@@ -61,6 +69,7 @@ const NewBlogPage = () => {
   });
   const {
     reset,
+    watch,
     control,
     handleSubmit,
     register,
@@ -132,14 +141,26 @@ const NewBlogPage = () => {
 
         </Controller>
 
-        <Textarea
-          label="Content"
-          description="Body of the blog post"
-          placeholder="A quick brown fox jumps over the lazy dog"
-          error={errors.content?.message}
-          inputWrapperOrder={['label', 'input', 'description', 'error']}
-          {...register('content')}
-        />
+        <div className='flex flex-wrap gap-2'>
+          <Controller
+            control={control}
+            name='content'
+            render={({ field: { name, onChange, onBlur, value } }) => <AceEditor
+              className='flex-1 border'
+              value={value}
+              name={name}
+              onChange={onChange}
+              onBlur={onBlur}
+              mode='markdown'
+              theme='github'
+              editorProps={{ $blockScrolling: true }}
+            />}
+          />
+
+          <Markdown
+            className='prose lg:prose-xl flex-1 border'
+            remarkPlugins={[remarkGfm, remarkToc]}>{watch('content')}</Markdown>
+        </div>
       </div>
 
       <Button type="submit">Submit</Button>

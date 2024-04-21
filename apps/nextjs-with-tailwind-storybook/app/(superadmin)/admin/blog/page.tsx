@@ -3,16 +3,11 @@
 import { Button, Table, TableData } from '@mantine/core'
 import { useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
 import React from 'react'
-import dayjs from 'dayjs'
-import LocalizedFormat from 'dayjs/plugin/localizedFormat'
-import Loading from 'libs/ui/src/lib/Loading/Loading'
+
 import { useRouter } from 'next/navigation'
-
-dayjs.extend(LocalizedFormat)
-
-const formatData = (date: Date | string) => {
-  return dayjs(date).format('LLL')
-}
+import { Loading } from '@nx-nextjs-tailwind-storybook/ui'
+import Link from 'next/link'
+import formatDate from 'apps/nextjs-with-tailwind-storybook/utils/formatDate'
 
 const AdminPostsPage = () => {
 
@@ -31,11 +26,11 @@ const AdminPostsPage = () => {
     body: data?.posts.map((element) => {
       const fullName = element.author.firstName + ' ' + element.author.lastName
       return [
-        element.title,
+        <Link href={`blog/${element._id}`} key={element._id}>{element.title}</Link>,
         element.status,
         element.tagline,
-        formatData(element.createdAt),
-        formatData(element.updatedAt),
+        formatDate(element.createdAt),
+        formatDate(element.updatedAt),
         fullName,
       ]
     })
@@ -45,7 +40,9 @@ const AdminPostsPage = () => {
   return (
     <div>
       <div className='flex justify-end items-center'>
-        <Button onClick={() => router.push('/admin/blog/new')} variant='filled'>New Post</Button>
+        <Button
+          onClick={() => router.push('/admin/blog/new')}
+          variant='filled'>New Post</Button>
       </div>
       <Table highlightOnHover stickyHeader striped data={tableData} />
     </div>

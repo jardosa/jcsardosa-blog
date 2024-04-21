@@ -9,4 +9,3 @@ export * from './lib/MainLayout/MainLayout';
 export * from './lib/Form/Input/Input';
 export * from './lib/Form/Input/InputPassword';
 export * from './lib/Loading/Loading';
-export * from './lib/ui';
