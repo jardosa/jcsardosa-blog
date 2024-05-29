@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, TextInput, Textarea, Radio, Group } from '@mantine/core';
+import { Button, TextInput, Radio, Group } from '@mantine/core';
 import { Category, useCreatePostMutation, PostFieldsFragmentDoc } from '@nx-nextjs-tailwind-storybook/data-access';
 import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
