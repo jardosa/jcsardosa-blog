@@ -1,0 +1,29 @@
+{
+  "name": "blog-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/blog-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["blog"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/blog-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "blog:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "blog:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "blog:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
