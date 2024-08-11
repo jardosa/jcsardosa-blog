@@ -4,4 +4,4 @@ export * from './lib/feature';
 export * from './lib/ApolloWrapper'
 export * from './lib/ApolloClientRSC'
 export * from './lib/AuthWrapper'
-export * from './lib/MantineProvider'
+export * from './lib/MantineProvider/MantineProvider';

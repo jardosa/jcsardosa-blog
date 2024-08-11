@@ -1,9 +1,11 @@
 import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
+import MantineProviderWrapper from './utils/providers/MantineProviderWrapper'
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -15,13 +17,31 @@ declare module '@tanstack/react-router' {
   }
 }
 
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      networkMode: 'offlineFirst',
+      staleTime: 60 * 1000,
+      gcTime: 60 * 1000,
+      refetchInterval: 60 * 1000,
+    },
+    mutations: {
+      networkMode: 'offlineFirst'
+    }
+  },
+});
+
 // Render the app
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>,
+    <MantineProviderWrapper>
+      <QueryClientProvider client={queryClient}>
+        <StrictMode>
+          <RouterProvider router={router} />
+        </StrictMode>
+      </QueryClientProvider>
+    </MantineProviderWrapper>
   )
 }
