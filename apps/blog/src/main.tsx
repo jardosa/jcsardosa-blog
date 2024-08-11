@@ -6,9 +6,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 import MantineProviderWrapper from './utils/providers/MantineProviderWrapper'
+import { Loading } from './components/Loading'
 
 // Create a new router instance
-const router = createRouter({ routeTree })
+const router = createRouter({
+  routeTree,
+  defaultPendingComponent: () => <Loading />,
+})
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {

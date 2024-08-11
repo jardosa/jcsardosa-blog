@@ -20,7 +20,7 @@ const BlogViewPage: NextPage<{ params: { slug: string } }> = async ({ params }) 
   return (
     <div className='space-y-5'>
       <div className='space-y-2 '>
-        <div className='h-[400px] relative'>
+        <div className='max-h-[400px] relative'>
           <Image className='w-auto' alt={data.post?.slug as string} src={data?.post?.coverPhotoURL as string} fill />
         </div>
         <h1 className='text-4xl'>{data.post?.title}</h1>
