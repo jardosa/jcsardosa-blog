@@ -13,7 +13,10 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
+import { Route as PostsIndexImport } from './routes/posts/index'
 import { Route as PostsPostIdImport } from './routes/posts/$postId'
+import { Route as PostsPostIdEditImport } from './routes/posts_/$postId/edit'
 
 // Create Virtual Routes
 
@@ -27,13 +30,28 @@ const AboutLazyRoute = AboutLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
+const LoginRoute = LoginImport.update({
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const PostsIndexRoute = PostsIndexImport.update({
+  path: '/posts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const PostsPostIdRoute = PostsPostIdImport.update({
   path: '/posts/$postId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsPostIdEditRoute = PostsPostIdEditImport.update({
+  path: '/posts/$postId/edit',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +64,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -62,6 +87,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof rootRoute
     }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts/$postId/edit': {
+      id: '/posts/$postId/edit'
+      path: '/posts/$postId/edit'
+      fullPath: '/posts/$postId/edit'
+      preLoaderRoute: typeof PostsPostIdEditImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,8 +108,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
+  LoginRoute,
   AboutLazyRoute,
   PostsPostIdRoute,
+  PostsIndexRoute,
+  PostsPostIdEditRoute,
 })
 
 /* prettier-ignore-end */
@@ -82,18 +124,30 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/login",
         "/about",
-        "/posts/$postId"
+        "/posts/$postId",
+        "/posts/",
+        "/posts/$postId/edit"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/login": {
+      "filePath": "login.tsx"
     },
     "/about": {
       "filePath": "about.lazy.tsx"
     },
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"
+    },
+    "/posts/": {
+      "filePath": "posts/index.tsx"
+    },
+    "/posts/$postId/edit": {
+      "filePath": "posts_/$postId/edit.tsx"
     }
   }
 }

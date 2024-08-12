@@ -7,6 +7,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { routeTree } from './routeTree.gen'
 import MantineProviderWrapper from './utils/providers/MantineProviderWrapper'
 import { Loading } from './components/Loading'
+import { getCookie } from 'cookies-next'
+import { ApolloClientWrapper } from './utils/providers/ApolloClientWrapper'
 
 // Create a new router instance
 const router = createRouter({
@@ -39,13 +41,17 @@ export const queryClient = new QueryClient({
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
+  const authToken = getCookie('authToken')
+
   root.render(
     <MantineProviderWrapper>
-      <QueryClientProvider client={queryClient}>
-        <StrictMode>
-          <RouterProvider router={router} />
-        </StrictMode>
-      </QueryClientProvider>
+      <ApolloClientWrapper authToken={authToken as string}>
+        <QueryClientProvider client={queryClient}>
+          <StrictMode>
+            <RouterProvider router={router} />
+          </StrictMode>
+        </QueryClientProvider>
+      </ApolloClientWrapper>
     </MantineProviderWrapper>
   )
 }
