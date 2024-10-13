@@ -42,7 +42,7 @@ const AdminPostsPage = () => {
     <div>
       <div className='flex justify-end items-center'>
         <Button
-          onClick={() => navigate({ to: '/posts/new' })}
+          onClick={() => navigate({ to: '/admin/posts/new' })}
           variant='filled'>New Post</Button>
       </div>
       <Table highlightOnHover stickyHeader striped data={tableData} />

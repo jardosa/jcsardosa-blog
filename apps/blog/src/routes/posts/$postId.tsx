@@ -8,15 +8,17 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkToc from "remark-toc";
 
-const postQueryOptions = (postId: string) => queryOptions({
-  queryKey: ['posts'],
-  queryFn: async () =>
-    request<GetPostQuery, GetPostQueryVariables>(
-      import.meta.env.VITE_EXTERNAL_GRAPHQL_URL,
-      GetPostDocument,
-      { slug: postId },
-    ),
-})
+const postQueryOptions = (postId: string) => {
+  return queryOptions({
+    queryKey: ['posts', postId],
+    queryFn: async () =>
+      request<GetPostQuery, GetPostQueryVariables>(
+        import.meta.env.VITE_EXTERNAL_GRAPHQL_URL,
+        GetPostDocument,
+        { slug: postId },
+      ),
+  })
+}
 
 export const Route = createFileRoute('/posts/$postId')({
   component: () => <Post />,

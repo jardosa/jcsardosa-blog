@@ -1,52 +1,47 @@
-import { TableData, Button, Table } from '@mantine/core'
-import { useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
-import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Image } from '@mantine/core'
+import { Post, useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { Loading } from '../../components/Loading'
-import formatDate from '../../utils/formatDate'
+import { FC } from 'react'
 
 export const Route = createFileRoute('/posts/')({
-  component: () => <AdminPostsPage />
+  component: () => <BlogListPage />
 })
 
+const BlogSnippet: FC<{ post: Post }> = ({ post }) => {
 
+  return <div className='outline outline-1 outline-neutral-200 rounded-sm flex m-5 gap-3'>
+    <div>
+      <Image h={200} w={200} src={post.coverPhotoURL as string} alt={post.title} />
+    </div>
+    <div className='space-y-2 py-2'>
+      <Link to={`/posts/${post.slug}`} className='text-2xl'>{post.title}</Link>
+      <div className='text-lg text-neutral-400 italic'>{post.tagline}</div>
+    </div>
+    <div>
 
-const AdminPostsPage = () => {
+    </div>
+  </div>
+}
 
+const BlogList: FC<{ posts: Post[] }> = ({ posts }) => {
+  return <div>
+    {posts?.map((post: Post) => <BlogSnippet post={post} />)}
+  </div>
+}
+
+const BlogListPage = () => {
   const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0 } } })
-  console.log({ loading, data })
-  const navigate = useNavigate()
 
-  const tableData: TableData = {
-    head: [
-      "Title",
-      "Status",
-      "Tagline",
-      "Created At",
-      "Updated At",
-      "Author",
-    ],
-    body: data?.posts.map((element) => {
-      const fullName = element.author.firstName + ' ' + element.author.lastName
-      return [
-        <Link to={`${element._id}`} key={element._id}>{element.title}</Link>,
-        element.status,
-        element.tagline,
-        formatDate(element.createdAt),
-        formatDate(element.updatedAt),
-        fullName,
-      ]
-    })
-  }
 
   if (loading || !data?.posts) return <Loading />
+
   return (
-    <div>
-      <div className='flex justify-end items-center'>
-        <Button
-          onClick={() => navigate({ to: '/posts/new' })}
-          variant='filled'>New Post</Button>
-      </div>
-      <Table highlightOnHover stickyHeader striped data={tableData} />
+    <div className='text-2xl'>
+      <BlogList posts={data?.posts as Post[]} />
+
     </div>
   )
 }
+
+export default BlogListPage

@@ -11,7 +11,7 @@ import formatDate from '../../../utils/formatDate'
 
 
 const postQueryOptions = (postId: string) => queryOptions({
-  queryKey: ['posts'],
+  queryKey: ['posts', postId],
   queryFn: async () =>
     request<GetPostQuery, GetPostQueryVariables>(
       import.meta.env.VITE_EXTERNAL_GRAPHQL_URL,

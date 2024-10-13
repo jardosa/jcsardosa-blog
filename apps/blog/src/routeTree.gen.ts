@@ -16,7 +16,6 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as PostsIndexImport } from './routes/posts/index'
 import { Route as AdminIndexImport } from './routes/admin/index'
-import { Route as PostsNewImport } from './routes/posts/new'
 import { Route as PostsPostIdImport } from './routes/posts/$postId'
 import { Route as AdminPostsIndexImport } from './routes/admin/posts/index'
 import { Route as PostsPostIdEditImport } from './routes/posts_/$postId/edit'
@@ -52,11 +51,6 @@ const PostsIndexRoute = PostsIndexImport.update({
 
 const AdminIndexRoute = AdminIndexImport.update({
   path: '/admin/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PostsNewRoute = PostsNewImport.update({
-  path: '/posts/new',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -117,13 +111,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof rootRoute
     }
-    '/posts/new': {
-      id: '/posts/new'
-      path: '/posts/new'
-      fullPath: '/posts/new'
-      preLoaderRoute: typeof PostsNewImport
-      parentRoute: typeof rootRoute
-    }
     '/admin/': {
       id: '/admin/'
       path: '/admin'
@@ -176,7 +163,6 @@ export const routeTree = rootRoute.addChildren({
   LoginRoute,
   AboutLazyRoute,
   PostsPostIdRoute,
-  PostsNewRoute,
   AdminIndexRoute,
   PostsIndexRoute,
   AdminPostsPostIdRoute,
@@ -197,7 +183,6 @@ export const routeTree = rootRoute.addChildren({
         "/login",
         "/about",
         "/posts/$postId",
-        "/posts/new",
         "/admin/",
         "/posts/",
         "/admin/posts/$postId",
@@ -217,9 +202,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"
-    },
-    "/posts/new": {
-      "filePath": "posts/new.tsx"
     },
     "/admin/": {
       "filePath": "admin/index.tsx"
