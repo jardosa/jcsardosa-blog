@@ -5,7 +5,7 @@ import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import formatDate from '../../../utils/formatDate'
 
 export const Route = createFileRoute('/admin/posts/')({
-  component: () => AdminPostsPage
+  component: () => <AdminPostsPage />
 })
 
 
@@ -27,7 +27,7 @@ const AdminPostsPage = () => {
     body: data?.posts.map((element) => {
       const fullName = element.author.firstName + ' ' + element.author.lastName
       return [
-        <Link href={`blog/${element._id}`} key={element._id}>{element.title}</Link>,
+        <Link to={`${element._id}`} key={element._id}>{element.title}</Link>,
         element.status,
         element.tagline,
         formatDate(element.createdAt),
@@ -41,11 +41,9 @@ const AdminPostsPage = () => {
   return (
     <div>
       <div className='flex justify-end items-center'>
-        <Link>
-          <Button
-            onClick={() => navigate({ to: '/admin/posts/new' })}
-            variant='filled'>New Post</Button>
-        </Link>
+        <Button
+          onClick={() => navigate({ to: '/posts/new' })}
+          variant='filled'>New Post</Button>
       </div>
       <Table highlightOnHover stickyHeader striped data={tableData} />
     </div>

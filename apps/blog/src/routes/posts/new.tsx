@@ -1,9 +1,7 @@
-'use client';
-
+import { createFileRoute } from '@tanstack/react-router'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, TextInput, Textarea, Radio, Group } from '@mantine/core';
+import { Button, TextInput, Radio, Group } from '@mantine/core';
 import { Category, useCreatePostMutation, PostFieldsFragmentDoc } from '@nx-nextjs-tailwind-storybook/data-access';
-import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { startCase } from 'lodash';
@@ -17,6 +15,9 @@ import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 
+export const Route = createFileRoute('/posts/new')({
+  component: () => <div>Hello /posts/new!</div>
+})
 
 const NewBlogSchema = z.object({
   title: z.string().min(8),

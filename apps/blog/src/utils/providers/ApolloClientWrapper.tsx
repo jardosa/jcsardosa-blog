@@ -23,7 +23,7 @@ const makeClient = (authToken: string) => {
 
   return new ApolloClient({
     cache: new InMemoryCache(),
-    // link: authLink.concat(httpLink),
+    link: authLink.concat(httpLink),
   });
 }
 
