@@ -1,5 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { cn } from "libs/ui/src/utils/tailwindCn";
+import { cn } from "../../../utils/tailwindCn";
 import { ElementRef, forwardRef } from "react";
 import BasePrefix, { BasePrefixProps } from "./BasePrefix";
 import BaseSuffix, { BaseSuffixProps } from "./BaseSuffix";

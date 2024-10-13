@@ -1,5 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { cn } from "libs/ui/src/utils/tailwindCn";
+import { cn } from "../../../utils/tailwindCn";
 import { ComponentProps, FC } from "react";
 import Button, { ButtonProps } from "../../Button/Button";
 

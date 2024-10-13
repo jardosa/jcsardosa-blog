@@ -15,8 +15,12 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as PostsIndexImport } from './routes/posts/index'
+import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as PostsPostIdImport } from './routes/posts/$postId'
+import { Route as AdminPostsIndexImport } from './routes/admin/posts/index'
 import { Route as PostsPostIdEditImport } from './routes/posts_/$postId/edit'
+import { Route as AdminPostsNewImport } from './routes/admin/posts/new'
+import { Route as AdminPostsPostIdImport } from './routes/admin/posts/$postId'
 
 // Create Virtual Routes
 
@@ -45,13 +49,33 @@ const PostsIndexRoute = PostsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminIndexRoute = AdminIndexImport.update({
+  path: '/admin/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const PostsPostIdRoute = PostsPostIdImport.update({
   path: '/posts/$postId',
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminPostsIndexRoute = AdminPostsIndexImport.update({
+  path: '/admin/posts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const PostsPostIdEditRoute = PostsPostIdEditImport.update({
   path: '/posts/$postId/edit',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminPostsNewRoute = AdminPostsNewImport.update({
+  path: '/admin/posts/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminPostsPostIdRoute = AdminPostsPostIdImport.update({
+  path: '/admin/posts/$postId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -87,6 +111,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof rootRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/posts/': {
       id: '/posts/'
       path: '/posts'
@@ -94,11 +125,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/admin/posts/$postId': {
+      id: '/admin/posts/$postId'
+      path: '/admin/posts/$postId'
+      fullPath: '/admin/posts/$postId'
+      preLoaderRoute: typeof AdminPostsPostIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/posts/new': {
+      id: '/admin/posts/new'
+      path: '/admin/posts/new'
+      fullPath: '/admin/posts/new'
+      preLoaderRoute: typeof AdminPostsNewImport
+      parentRoute: typeof rootRoute
+    }
     '/posts/$postId/edit': {
       id: '/posts/$postId/edit'
       path: '/posts/$postId/edit'
       fullPath: '/posts/$postId/edit'
       preLoaderRoute: typeof PostsPostIdEditImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/posts/': {
+      id: '/admin/posts/'
+      path: '/admin/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AdminPostsIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -111,8 +163,12 @@ export const routeTree = rootRoute.addChildren({
   LoginRoute,
   AboutLazyRoute,
   PostsPostIdRoute,
+  AdminIndexRoute,
   PostsIndexRoute,
+  AdminPostsPostIdRoute,
+  AdminPostsNewRoute,
   PostsPostIdEditRoute,
+  AdminPostsIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -127,8 +183,12 @@ export const routeTree = rootRoute.addChildren({
         "/login",
         "/about",
         "/posts/$postId",
+        "/admin/",
         "/posts/",
-        "/posts/$postId/edit"
+        "/admin/posts/$postId",
+        "/admin/posts/new",
+        "/posts/$postId/edit",
+        "/admin/posts/"
       ]
     },
     "/": {
@@ -143,11 +203,23 @@ export const routeTree = rootRoute.addChildren({
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"
     },
+    "/admin/": {
+      "filePath": "admin/index.tsx"
+    },
     "/posts/": {
       "filePath": "posts/index.tsx"
     },
+    "/admin/posts/$postId": {
+      "filePath": "admin/posts/$postId.tsx"
+    },
+    "/admin/posts/new": {
+      "filePath": "admin/posts/new.tsx"
+    },
     "/posts/$postId/edit": {
       "filePath": "posts_/$postId/edit.tsx"
+    },
+    "/admin/posts/": {
+      "filePath": "admin/posts/index.tsx"
     }
   }
 }
