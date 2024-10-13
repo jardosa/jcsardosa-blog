@@ -11,14 +11,14 @@ const DashboardPage = () => {
   const items = [
     {
       label: 'BlogPosts',
-      href: '/admin/blog',
+      href: '/admin/posts',
       icon: <BookOpenIcon className='w-full h-full' />
     }
   ]
 
   return (
     <div className='w-full h-screen grid place-items-center'>
-      {items.map(({ href: link, icon, label: name }) => <Link key={link} className='text-center' href={link}>
+      {items.map(({ href: link, icon, label: name }) => <Link key={link} className='text-center' to={link}>
         <div className='rounded-md w-28 h-28 outline outline-1 outline-neutral-100'>
           {icon}
         </div>

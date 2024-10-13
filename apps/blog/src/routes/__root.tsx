@@ -14,10 +14,10 @@ export const Route = createRootRoute({
 const Root = () => {
 
   const navItems = links.map(({ name, link, icon }) => {
-    return <NavLink key={link} component={Link} href={link} label={name} leftSection={icon} />
+    return <NavLink key={link} component={Link} to={link} label={name} leftSection={icon} />
   })
   const bottomNavItems = bottomLinks.map(({ name, link, icon }) => {
-    return <NavLink key={link} component={Link} href={link} label={name} leftSection={icon} />
+    return <NavLink key={link} component={Link} to={link} label={name} leftSection={icon} />
   })
 
 
@@ -35,7 +35,7 @@ const Root = () => {
 const links: { name: string, link: string, icon: ReactElement | ReactNode }[] = [
   {
     name: 'Home',
-    link: '/blog/',
+    link: '/posts/',
     icon: <HomeIcon className='w-5 h-5' />
   },
   {
