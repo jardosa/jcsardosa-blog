@@ -6,6 +6,12 @@ mutation CreatePost($createPostInput: CreatePostInput!) {
   }
 }
 
+mutation UpdatePost($updatePostInput: UpdatePostInput!) {
+  updatePost(updatePostInput: $updatePostInput) {
+    ...postFields
+  }
+}
+
 mutation RemovePost($_id: ID!) {
   removePost(_id: $_id) {
     ...postFields

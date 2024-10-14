@@ -21,5 +21,8 @@ export class CreatePostInput implements Pick<Post, 'title' | 'content' | 'slug' 
   @Field(() => String, { description: 'Cover photo of the post', nullable: true })
   coverPhotoURL?: string;
 
+  @Field(() => Boolean)
+  isPublished?: boolean
+
   author: string;
 }

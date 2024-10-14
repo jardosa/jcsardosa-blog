@@ -43,7 +43,7 @@ registerEnumType(Category, {
 });
 
 @ObjectType({ isAbstract: true, implements: [Node, TimeStamps] })
-@InputType({isAbstract: true})
+  @InputType({ isAbstract: true })
 @Schema({ timestamps: true })
 export class Post extends Node {
   @Prop()
@@ -73,6 +73,10 @@ export class Post extends Node {
   @Prop()
   @Field({ nullable: true })
   publishedAt?: Date;
+
+  @Prop()
+  @Field({ nullable: true })
+  isPublished?: boolean
 
   @Prop()
   @Field({ defaultValue: "" })

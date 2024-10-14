@@ -8,7 +8,7 @@ const defaultOptions = {} as const;
 export type WhoAmIQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string, profilePhotoURL: string } };
+export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'User', firstName: string, lastName: string, email: string, createdAt: string, updatedAt: string, profilePhotoURL: string, role: Types.Role } };
 
 
 export const WhoAmIDocument = gql`

@@ -13,14 +13,15 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LogoutImport } from './routes/logout'
 import { Route as LoginImport } from './routes/login'
 import { Route as PostsIndexImport } from './routes/posts/index'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as PostsPostIdImport } from './routes/posts/$postId'
 import { Route as AdminPostsIndexImport } from './routes/admin/posts/index'
-import { Route as PostsPostIdEditImport } from './routes/posts_/$postId/edit'
 import { Route as AdminPostsNewImport } from './routes/admin/posts/new'
 import { Route as AdminPostsPostIdImport } from './routes/admin/posts/$postId'
+import { Route as AdminPostsPostIdEditImport } from './routes/admin/posts_/$postId/edit'
 
 // Create Virtual Routes
 
@@ -33,6 +34,11 @@ const AboutLazyRoute = AboutLazyImport.update({
   path: '/about',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+
+const LogoutRoute = LogoutImport.update({
+  path: '/logout',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -64,11 +70,6 @@ const AdminPostsIndexRoute = AdminPostsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PostsPostIdEditRoute = PostsPostIdEditImport.update({
-  path: '/posts/$postId/edit',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AdminPostsNewRoute = AdminPostsNewImport.update({
   path: '/admin/posts/new',
   getParentRoute: () => rootRoute,
@@ -76,6 +77,11 @@ const AdminPostsNewRoute = AdminPostsNewImport.update({
 
 const AdminPostsPostIdRoute = AdminPostsPostIdImport.update({
   path: '/admin/posts/$postId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminPostsPostIdEditRoute = AdminPostsPostIdEditImport.update({
+  path: '/admin/posts/$postId/edit',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -95,6 +101,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -139,18 +152,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsNewImport
       parentRoute: typeof rootRoute
     }
-    '/posts/$postId/edit': {
-      id: '/posts/$postId/edit'
-      path: '/posts/$postId/edit'
-      fullPath: '/posts/$postId/edit'
-      preLoaderRoute: typeof PostsPostIdEditImport
-      parentRoute: typeof rootRoute
-    }
     '/admin/posts/': {
       id: '/admin/posts/'
       path: '/admin/posts'
       fullPath: '/admin/posts'
       preLoaderRoute: typeof AdminPostsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/posts/$postId/edit': {
+      id: '/admin/posts/$postId/edit'
+      path: '/admin/posts/$postId/edit'
+      fullPath: '/admin/posts/$postId/edit'
+      preLoaderRoute: typeof AdminPostsPostIdEditImport
       parentRoute: typeof rootRoute
     }
   }
@@ -161,14 +174,15 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   LoginRoute,
+  LogoutRoute,
   AboutLazyRoute,
   PostsPostIdRoute,
   AdminIndexRoute,
   PostsIndexRoute,
   AdminPostsPostIdRoute,
   AdminPostsNewRoute,
-  PostsPostIdEditRoute,
   AdminPostsIndexRoute,
+  AdminPostsPostIdEditRoute,
 })
 
 /* prettier-ignore-end */
@@ -181,14 +195,15 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/login",
+        "/logout",
         "/about",
         "/posts/$postId",
         "/admin/",
         "/posts/",
         "/admin/posts/$postId",
         "/admin/posts/new",
-        "/posts/$postId/edit",
-        "/admin/posts/"
+        "/admin/posts/",
+        "/admin/posts/$postId/edit"
       ]
     },
     "/": {
@@ -196,6 +211,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/logout": {
+      "filePath": "logout.tsx"
     },
     "/about": {
       "filePath": "about.lazy.tsx"
@@ -215,11 +233,11 @@ export const routeTree = rootRoute.addChildren({
     "/admin/posts/new": {
       "filePath": "admin/posts/new.tsx"
     },
-    "/posts/$postId/edit": {
-      "filePath": "posts_/$postId/edit.tsx"
-    },
     "/admin/posts/": {
       "filePath": "admin/posts/index.tsx"
+    },
+    "/admin/posts/$postId/edit": {
+      "filePath": "admin/posts_/$postId/edit.tsx"
     }
   }
 }

@@ -31,6 +31,7 @@ export type CreatePostInput = {
   content: Scalars['String']['input'];
   /** Cover photo of the post */
   coverPhotoURL?: InputMaybe<Scalars['String']['input']>;
+  isPublished: Scalars['Boolean']['input'];
   /** Slug of the post. This will be used as a Human-readable ID */
   slug: Scalars['String']['input'];
   /** Tagline of the post */
@@ -125,6 +126,7 @@ export type Post = Node & TimeStamps & {
   content: Scalars['String']['output'];
   coverPhotoURL?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  isPublished?: Maybe<Scalars['Boolean']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
   status: Status;
@@ -175,6 +177,12 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   input?: InputMaybe<SearchUsersInput>;
 };
+
+/** User Role */
+export enum Role {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
 
 export type SearchPostsInput = {
   _id?: InputMaybe<Scalars['String']['input']>;
@@ -230,6 +238,7 @@ export type UpdatePostInput = {
   /** Cover photo of the post */
   coverPhotoURL?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /** Slug of the post. This will be used as a Human-readable ID */
   slug?: InputMaybe<Scalars['String']['input']>;
   /** Tagline of the post */
@@ -256,5 +265,6 @@ export type User = Node & TimeStamps & {
   handle: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   profilePhotoURL: Scalars['String']['output'];
+  role: Role;
   updatedAt: Scalars['DateTime']['output'];
 };

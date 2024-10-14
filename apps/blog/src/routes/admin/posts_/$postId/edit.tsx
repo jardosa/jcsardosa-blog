@@ -1,31 +1,38 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { createFileRoute } from '@tanstack/react-router'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, TextInput, Radio, Group, Switch } from '@mantine/core';
-import { Category, useCreatePostMutation, PostFieldsFragmentDoc } from '@nx-nextjs-tailwind-storybook/data-access';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { startCase } from 'lodash';
+import { TextInput, Radio, Group, Switch, Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import remarkToc from "remark-toc";
+import { Category, GetPostDocument, GetPostQuery, GetPostQueryVariables, useUpdatePostMutation } from '@nx-nextjs-tailwind-storybook/data-access';
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { startCase } from 'lodash';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
-
+import remarkGfm from 'remark-gfm';
+import remarkToc from 'remark-toc';
+import z from 'zod'
 import AceEditor from "react-ace";
-import * as a from "ace-builds/src-noconflict/mode-markdown";
-import * as b from "ace-builds/src-noconflict/theme-github";
-import * as c from "ace-builds/src-noconflict/ext-language_tools";
-import dayjs from 'dayjs';
+import { queryClient } from '../../../../main';
+import { queryOptions } from '@tanstack/react-query';
+import request from 'graphql-request';
 
+const postQueryOptions = (postId: string) => queryOptions({
+  queryKey: ['posts', postId],
+  queryFn: async () =>
+    request<GetPostQuery, GetPostQueryVariables>(
+      import.meta.env.VITE_EXTERNAL_GRAPHQL_URL,
+      GetPostDocument,
+      { _id: postId },
+    ),
+})
 
-export const Route = createFileRoute('/admin/posts/new')({
-  component: () => <NewBlogPage />
+export const Route = createFileRoute('/admin/posts/$postId/edit')({
+  component: () => <UpdateBlogPage />,
+  loader: ({ params }) => queryClient.ensureQueryData(postQueryOptions(params.postId))
+
 })
 
 
-const NewBlogSchema = z.object({
+const UpdateBlogSchema = z.object({
   title: z.string().min(8),
   coverPhotoURL: z.string().optional().nullable(),
   content: z.string().min(10),
@@ -40,60 +47,61 @@ const NewBlogSchema = z.object({
   isPublished: z.boolean().catch(false)
 });
 
-type NewBlog = z.infer<typeof NewBlogSchema>;
+type UpdateBlog = z.infer<typeof UpdateBlogSchema>;
 
-const NewBlogPage = () => {
+const UpdateBlogPage = () => {
+  const postData = Route.useLoaderData()
+  const navigate = useNavigate()
 
-  const defaultValues = {
-    category: Category.Automotive,
-    content: '',
-    title: '',
-    tagline: '',
-    coverPhotoURL: '',
-    isPublished: false,
-  }
+  const post = postData?.post
 
-  const [createPost] = useCreatePostMutation({
-    onCompleted: () => {
-      notifications.show({ color: 'green', title: 'Success', message: 'Blog post has been created' });
-      reset(defaultValues)
+  const [updatePost] = useUpdatePostMutation({
+    onCompleted: (data) => {
+      notifications.show({ color: 'green', title: 'Success', message: 'Blog post has been updated' });
+      navigate({ to: '/admin/posts/$postId', params: { postId: data.updatePost._id } })
     },
     onError: () => {
-      notifications.show({ color: 'red', title: 'Failed', message: 'Error occurred while creating blog post' });
+      notifications.show({ color: 'red', title: 'Failed', message: 'Error occurred while updating blog post' });
     },
-    update(cache, { data }) {
-      cache.modify({
-        fields: {
-          posts(existingPosts = []) {
-            const newPostRef = cache.writeFragment({
-              data: data?.createPost,
-              fragment: PostFieldsFragmentDoc,
-              fragmentName: 'postFields'
-            });
-            return [...existingPosts, newPostRef];
-          }
-        }
-      })
-    }
+    // update(cache, { data }) {
+    //   cache.modify({
+    //     fields: {
+    //       posts(existingPosts = []) {
+    //         const newPostRef = cache.writeFragment({
+    //           data: data?.updatePost,
+    //           fragment: PostFieldsFragmentDoc,
+    //           fragmentName: 'postFields'
+    //         });
+    //         return [...existingPosts, newPostRef];
+    //       }
+    //     }
+    //   })
+    // },
   });
   const {
-    reset,
     watch,
     control,
     handleSubmit,
     register,
     clearErrors,
     formState: { errors }
-  } = useForm<NewBlog>({
-    resolver: zodResolver(NewBlogSchema),
+  } = useForm<UpdateBlog>({
+    resolver: zodResolver(UpdateBlogSchema),
     mode: 'onSubmit',
-    defaultValues,
+    defaultValues: {
+      tagline: post?.tagline,
+      title: post?.title,
+      category: post?.category,
+      content: post?.content,
+      coverPhotoURL: post?.coverPhotoURL,
+      isPublished: !!post?.isPublished,
+
+    }
   });
 
-  const onSubmit: SubmitHandler<NewBlog> = (data) => {
-    const slug = data.title.toLowerCase().split(' ').join('-').concat(dayjs().format('YYYY-MM-DDT-HH:mm:ss'));
-    createPost({
-      variables: { createPostInput: { ...data, slug, } }
+  const onSubmit: SubmitHandler<UpdateBlog> = (data) => {
+    updatePost({
+      variables: { updatePostInput: { id: post?._id as string, ...data, } }
     });
   };
 
@@ -187,4 +195,4 @@ const NewBlogPage = () => {
   );
 };
 
-export default NewBlogPage;
+export default UpdateBlogPage;

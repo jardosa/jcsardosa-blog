@@ -49,7 +49,14 @@ type User implements Node & TimeStamps {
   lastName: String!
   handle: String!
   email: String!
+  role: Role!
   profilePhotoURL: String!
+}
+
+"""User Role"""
+enum Role {
+  USER
+  ADMIN
 }
 
 input SearchUsersInput {
@@ -77,6 +84,7 @@ type Post implements Node & TimeStamps {
   author: User!
   status: Status!
   publishedAt: DateTime
+  isPublished: Boolean
   tagline: String!
   category: Category!
 }
@@ -168,6 +176,7 @@ input CreatePostInput {
 
   """Cover photo of the post"""
   coverPhotoURL: String
+  isPublished: Boolean!
 }
 
 input UpdatePostInput {
@@ -188,5 +197,6 @@ input UpdatePostInput {
 
   """Cover photo of the post"""
   coverPhotoURL: String
+  isPublished: Boolean
   id: ID!
 }
