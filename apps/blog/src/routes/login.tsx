@@ -82,7 +82,7 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className='grid place-items-center h-full w-full'>
+    <div className='grid place-items-center h-screen w-full'>
       <form onChange={() => clearErrors()} className='outline outline-1 rounded-md outline-slate-300 p-5 space-y-2' onSubmit={handleSubmit(onSubmit)}>
         <div className='space-y-2' >
           <Input

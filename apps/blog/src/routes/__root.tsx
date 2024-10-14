@@ -60,7 +60,6 @@ export const Route = createRootRoute({
 
 const Root = () => {
   const navigate = useNavigate()
-  // const userData = Route.useLoaderData()
   const location = useLocation()
 
   const shellDisabled = useMemo(() => {

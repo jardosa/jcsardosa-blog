@@ -19,7 +19,7 @@ export default function Page() {
         <div className="text-lg">You have been logged out</div>
         <div>
           <Link
-            className="hover:text-ui-orange-400 focus:text-ui-orange-400 transition cursor-pointer underline"
+            className="hover:text-slate-400 focus:text-slate-400 transition cursor-pointer underline"
             to={'/login'}
           >
             Click Here to go to login page

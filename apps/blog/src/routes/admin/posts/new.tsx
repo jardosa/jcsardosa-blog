@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, TextInput, Radio, Group, Switch } from '@mantine/core';
 import { Category, useCreatePostMutation, PostFieldsFragmentDoc } from '@nx-nextjs-tailwind-storybook/data-access';
@@ -44,6 +44,7 @@ type NewBlog = z.infer<typeof NewBlogSchema>;
 
 const NewBlogPage = () => {
 
+  const navigate = useNavigate()
   const defaultValues = {
     category: Category.Automotive,
     content: '',
@@ -54,9 +55,10 @@ const NewBlogPage = () => {
   }
 
   const [createPost] = useCreatePostMutation({
-    onCompleted: () => {
+    onCompleted: (data) => {
       notifications.show({ color: 'green', title: 'Success', message: 'Blog post has been created' });
       reset(defaultValues)
+      navigate({ to: '/admin/posts/$postId', params: { postId: data.createPost._id } })
     },
     onError: () => {
       notifications.show({ color: 'red', title: 'Failed', message: 'Error occurred while creating blog post' });
