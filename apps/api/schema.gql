@@ -125,6 +125,7 @@ input SearchPostsInput {
   status: Status
   tagline: String
   title: String
+  isPublished: Boolean
 }
 
 type Mutation {

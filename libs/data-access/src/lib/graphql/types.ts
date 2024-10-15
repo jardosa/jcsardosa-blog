@@ -190,6 +190,7 @@ export type SearchPostsInput = {
   category?: InputMaybe<Category>;
   content?: InputMaybe<Scalars['String']['input']>;
   coverPhotoURL?: InputMaybe<Scalars['String']['input']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   limit?: InputMaybe<Scalars['Float']['input']>;
   offset?: InputMaybe<Scalars['Float']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;

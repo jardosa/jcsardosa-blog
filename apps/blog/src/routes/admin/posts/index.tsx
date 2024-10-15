@@ -12,7 +12,15 @@ export const Route = createFileRoute('/admin/posts/')({
 
 const AdminPostsPage = () => {
 
-  const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0 } } })
+  const { data, loading } = useFindPostsQuery({
+    variables: {
+      searchInput: {
+        limit: 50,
+        offset: 0,
+        sortBy: 'createdAt', orderBy: 'desc'
+      }
+    }
+  })
   const navigate = useNavigate()
 
   const tableData: TableData = {
@@ -23,6 +31,7 @@ const AdminPostsPage = () => {
       "Created At",
       "Updated At",
       "Author",
+      "Is Published"
     ],
     body: data?.posts.map((element) => {
       const fullName = element.author.firstName + ' ' + element.author.lastName
@@ -33,6 +42,7 @@ const AdminPostsPage = () => {
         formatDate(element.createdAt),
         formatDate(element.updatedAt),
         fullName,
+        element.isPublished ? 'Yes' : 'No'
       ]
     })
   }

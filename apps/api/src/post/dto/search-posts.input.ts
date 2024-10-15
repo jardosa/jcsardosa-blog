@@ -37,5 +37,8 @@ export class SearchPostsInput extends SearchCommonInput implements Partial<Post>
   @Field({ nullable: true })
   title?: string;
 
+  @Field({ nullable: true })
+  isPublished?: boolean;
+
 
 }

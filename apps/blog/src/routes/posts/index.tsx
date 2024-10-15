@@ -31,7 +31,7 @@ const BlogList: FC<{ posts: Post[] }> = ({ posts }) => {
 }
 
 const BlogListPage = () => {
-  const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0 } } })
+  const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0, isPublished: true } } })
 
 
   if (loading || !data?.posts) return <Loading />
