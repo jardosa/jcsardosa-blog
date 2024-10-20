@@ -1,4 +1,7 @@
 import '../src/styles/index.css';
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+
 import type { Preview } from '@storybook/react';
 
 const preview: Preview = {

@@ -4,11 +4,12 @@ import { createRootRoute, FileBaseRouteOptions, Link, Outlet, ReactNode, redirec
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 import { ReactElement, useMemo } from 'react'
-import MainLayout from '../components/layouts/MainLayout/MainLayout'
+// import MainLayout from '../components/layouts/MainLayout/MainLayout'
 import { compact } from 'lodash'
 import { WhoAmIQuery, WhoAmIQueryVariables, WhoAmIDocument, Role, useWhoAmIQuery } from '@nx-nextjs-tailwind-storybook/data-access'
 import { getCookie } from 'cookies-next'
 import request from 'graphql-request'
+import MainLayout from 'libs/ui/src/lib/MainLayout/MainLayout'
 
 const beforeLoad: FileBaseRouteOptions['beforeLoad'] = async ({ location, }) => {
   const authToken = getCookie('authToken')
