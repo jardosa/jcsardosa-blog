@@ -25,7 +25,8 @@
       "@nx-nextjs-tailwind-storybook/feature/server": [
         "libs/feature/src/server.ts"
       ],
-      "@nx-nextjs-tailwind-storybook/ui": ["libs/ui/src/index.ts"]
+      "@nx-nextjs-tailwind-storybook/ui": ["libs/ui/src/index.ts"],
+      "blog-ui": ["libs/blog-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
