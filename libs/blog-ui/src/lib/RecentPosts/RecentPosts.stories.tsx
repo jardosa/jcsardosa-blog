@@ -4,6 +4,8 @@ import { RecentPosts } from './RecentPosts';
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 import { MantineProvider } from '@mantine/core';
+import { Category } from '@nx-nextjs-tailwind-storybook/data-access';
+import { useState } from 'react';
 
 const meta: Meta<typeof RecentPosts> = {
   component: RecentPosts,
@@ -40,11 +42,15 @@ export const Primary: Story = {
         title: 'Usability: A part of the User Experience ',
         tags: [{ 'label': 'HCI', value: 'hci' }]
       },
-    ]
+    ],
   },
-  render: (args) => <MantineProvider>
-    <RecentPosts {...args} />
-  </MantineProvider>
+  render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [activeTab, setActiveTab] = useState<Category | 'ALL'>('ALL')
+    return <MantineProvider>
+      <RecentPosts {...args} activeTab={activeTab} setActiveTab={setActiveTab} />
+    </MantineProvider>
+  }
 };
 
 export const Heading: Story = {

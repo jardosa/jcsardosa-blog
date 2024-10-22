@@ -32,7 +32,7 @@ const MainLayout: FC<MainLayoutProps> = ({
   return (
     <AppShell
       styles={{
-        main: { width: 740, margin: '0 auto' }
+        main: { display: 'flex', 'justifyContent': 'center' }
       }}
       disabled={disabled}
       header={{ height: 60, collapsed: !pinned }}
@@ -42,14 +42,14 @@ const MainLayout: FC<MainLayoutProps> = ({
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
 
       }}
-      aside={{
-        width: 300,
-        breakpoint: 'sm',
-        collapsed: {
-          mobile: true,
-        }
+      // aside={{
+      //   width: 300,
+      //   breakpoint: 'sm',
+      //   collapsed: {
+      //     mobile: true,
+      //   }
 
-      }}
+      // }}
       padding="sm"
     >
       <AppShell.Header withBorder={false}>
@@ -72,7 +72,11 @@ const MainLayout: FC<MainLayoutProps> = ({
         </div>
       </AppShell.Navbar>
 
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main>
+        <div className="w-[740px] mx-auto">
+          {children}
+        </div>
+      </AppShell.Main>
     </AppShell>
   );
 }
