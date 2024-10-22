@@ -9,7 +9,7 @@ import { compact } from 'lodash'
 import { WhoAmIQuery, WhoAmIQueryVariables, WhoAmIDocument, Role, useWhoAmIQuery } from '@nx-nextjs-tailwind-storybook/data-access'
 import { getCookie } from 'cookies-next'
 import request from 'graphql-request'
-import MainLayout from 'libs/ui/src/lib/MainLayout/MainLayout'
+import { MainLayout } from 'blog-ui'
 
 const beforeLoad: FileBaseRouteOptions['beforeLoad'] = async ({ location, }) => {
   const authToken = getCookie('authToken')
