@@ -1,4 +1,4 @@
-import { GetPostDocument, GetPostQuery, GetPostQueryVariables } from '@nx-nextjs-tailwind-storybook/data-access'
+import { Category, GetPostDocument, GetPostQuery, GetPostQueryVariables } from '@nx-nextjs-tailwind-storybook/data-access'
 import { queryOptions } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import request from 'graphql-request'
@@ -8,6 +8,7 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkToc from "remark-toc";
 import dayjs from 'dayjs'
+import { PostDetail } from 'blog-ui'
 
 const postQueryOptions = (postId: string) => {
   return queryOptions({
@@ -29,8 +30,18 @@ export const Route = createFileRoute('/posts/$postId')({
 export const Post = () => {
   const postData = Route.useLoaderData()
 
+  console.log({ postData })
   const fullName = `${postData.post?.author.firstName} ${postData.post?.author.lastName}`
   const datePublished = dayjs(postData.post?.publishedAt ?? undefined).format('MM/DD/YYYY')
+
+  return <PostDetail
+    author={fullName}
+    category={postData.post?.category as Category}
+    content={postData.post?.content ?? ''}
+    date={postData.post?.publishedAt ?? ''}
+    coverPhoto={postData.post?.coverPhotoURL ?? ''}
+    title={postData.post?.title ?? ''}
+  />
 
   return <div className='space-y-5 flex items-center justify-center'>
     <div className='max-w-[700px]'>

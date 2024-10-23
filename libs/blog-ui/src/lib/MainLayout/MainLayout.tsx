@@ -2,6 +2,7 @@ import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure, useHeadroom } from "@mantine/hooks";
 import { FC, PropsWithChildren, ReactElement, ReactNode } from "react";
 import { GiOverlordHelm } from "react-icons/gi";
+import { cn } from "../utils/tailwindCn";
 
 export interface MainLayoutProps extends PropsWithChildren {
   logo?: string
@@ -11,9 +12,11 @@ export interface MainLayoutProps extends PropsWithChildren {
   onClickAdminLogo?: () => void
   isAdmin?: boolean
   disabled?: boolean
+  inAdminPanel: boolean
 }
 
 const MainLayout: FC<MainLayoutProps> = ({
+  inAdminPanel,
   navItems,
   logo,
   children,
@@ -73,7 +76,9 @@ const MainLayout: FC<MainLayoutProps> = ({
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <div className="w-[740px] mx-auto">
+        <div className={cn(
+          !inAdminPanel && 'w-[740px] mx-auto'
+        )}>
           {children}
         </div>
       </AppShell.Main>

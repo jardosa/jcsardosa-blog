@@ -72,6 +72,7 @@ const Root = () => {
   const { data } = useWhoAmIQuery()
 
   const isAdmin = data?.whoAmI?.role === Role.Admin
+  const inAdminPanel = location.href.startsWith('/admin')
 
   const links: { name: string, link: string, icon: ReactElement | ReactNode }[] = [
     {
@@ -101,6 +102,7 @@ const Root = () => {
   })
 
   return <MainLayout
+    inAdminPanel={inAdminPanel}
     isAdmin={isAdmin}
     disabled={shellDisabled}
     onClickAdminLogo={() => navigate({ to: '/admin' })}

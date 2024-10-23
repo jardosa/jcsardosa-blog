@@ -1,5 +1,5 @@
 import { Category, useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
 import { RecentPosts } from 'blog-ui'
 import dayjs from 'dayjs'
 
@@ -13,10 +13,12 @@ function Index() {
 
   const [activeTab, setActiveTab] = useState<Category | 'ALL'>('ALL')
 
+  const navigate = useNavigate()
   const { data } = useFindPostsQuery({
     variables: {
       searchInput: {
-        ...activeTab !== 'ALL' && { category: activeTab }
+        ...activeTab !== 'ALL' && { category: activeTab },
+        isPublished: true
       }
     }
   })
@@ -24,6 +26,7 @@ function Index() {
   const posts: ComponentProps<typeof RecentPosts>['posts'] = data?.posts.map((post) => ({
     date: post.publishedAt ? dayjs(post.publishedAt).format('MMMM DD.YY') : 'Unknown Publish Date',
     title: `${post.title}`,
+    onClick: () => navigate({ to: '/posts/$postId', params: { postId: post.slug ?? '' } })
   }))
 
   return (
