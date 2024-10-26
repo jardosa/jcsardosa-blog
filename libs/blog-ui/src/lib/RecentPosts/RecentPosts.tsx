@@ -10,11 +10,12 @@ export interface RecentPostsProps {
   posts: ComponentProps<typeof PostList>['posts']
   activeTab: Category | 'ALL'
   setActiveTab: React.Dispatch<React.SetStateAction<Category | 'ALL'>>
+  header?: string;
 }
 
 export function RecentPosts(props: RecentPostsProps) {
 
-  const { posts = [], activeTab, setActiveTab } = props
+  const { posts = [], activeTab, setActiveTab, header = 'Recent Posts' } = props
   const categories: { label: string, value: string }[] =
     [{ label: 'All', value: 'ALL' }].concat(Object.entries(Category).map(([key, val]) => ({
       label: startCase(key),
@@ -23,7 +24,7 @@ export function RecentPosts(props: RecentPostsProps) {
 
   return (
     <div>
-      <h1 className="text-2xl text-[#474747] leading-9 mb-6">Recent Posts</h1>
+      <h1 className="text-2xl text-[#474747] leading-9 mb-6">{header}</h1>
       <Tabs classNames={{
         tab: cn(
           'group',

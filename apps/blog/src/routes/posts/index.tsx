@@ -1,44 +1,32 @@
-import { Image } from '@mantine/core'
-import { Post, useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Category, useFindPostsQuery } from '@nx-nextjs-tailwind-storybook/data-access'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Loading } from '../../components/Loading'
-import { FC } from 'react'
+import { ComponentProps, useState } from 'react'
+import { RecentPosts } from 'blog-ui'
+import dayjs from 'dayjs'
 
 export const Route = createFileRoute('/posts/')({
   component: () => <BlogListPage />
 })
 
-const BlogSnippet: FC<{ post: Post }> = ({ post }) => {
-
-  return <div className='outline outline-1 outline-neutral-200 rounded-sm flex m-5 gap-3'>
-    <div>
-      <Image h={200} w={200} src={post.coverPhotoURL as string} alt={post.title} />
-    </div>
-    <div className='space-y-2 py-2'>
-      <Link to={`/posts/${post.slug}`} className='text-2xl'>{post.title}</Link>
-      <div className='text-lg text-neutral-400 italic'>{post.tagline}</div>
-    </div>
-    <div>
-
-    </div>
-  </div>
-}
-
-const BlogList: FC<{ posts: Post[] }> = ({ posts }) => {
-  return <div>
-    {posts?.map((post: Post) => <BlogSnippet post={post} />)}
-  </div>
-}
 
 const BlogListPage = () => {
   const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0, isPublished: true } } })
+  const navigate = useNavigate()
 
-
+  const [activeTab, setActiveTab] = useState<Category | 'ALL'>('ALL')
   if (loading || !data?.posts) return <Loading />
+
+  const posts: ComponentProps<typeof RecentPosts>['posts'] = data?.posts.map((post) => ({
+    date: post.publishedAt ? dayjs(post.publishedAt).format('MMMM DD.YY') : 'Unknown Publish Date',
+    title: `${post.title}`,
+    onClick: () => navigate({ to: '/posts/$postId', params: { postId: post.slug ?? '' } })
+  }))
 
   return (
     <div className='text-2xl'>
-      <BlogList posts={data?.posts as Post[]} />
+      <RecentPosts header={'Posts'} activeTab={activeTab} setActiveTab={setActiveTab} posts={posts} />
+
 
     </div>
   )

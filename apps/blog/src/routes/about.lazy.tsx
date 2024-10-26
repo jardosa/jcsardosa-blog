@@ -7,8 +7,6 @@ export const Route = createLazyFileRoute('/about')({
   component: () => <About />,
 })
 
-
-
 const skills = ["Odoo",
   "ERP",
   "ReactJS",

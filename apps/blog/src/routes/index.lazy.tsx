@@ -18,7 +18,8 @@ function Index() {
     variables: {
       searchInput: {
         ...activeTab !== 'ALL' && { category: activeTab },
-        isPublished: true
+        isPublished: true,
+        limit: 10,
       }
     }
   })
