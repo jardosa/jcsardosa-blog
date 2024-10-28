@@ -1,4 +1,4 @@
-import { HomeIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/20/solid'
+import { HomeIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon, PencilIcon } from '@heroicons/react/20/solid'
 import { NavLink } from '@mantine/core'
 import { createRootRoute, FileBaseRouteOptions, Link, Outlet, ReactNode, redirect, useLocation, useNavigate } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
@@ -77,20 +77,21 @@ const Root = () => {
   const links: { name: string, link: string, icon: ReactElement | ReactNode }[] = [
     {
       name: 'Home',
-      link: isAdmin ? '/admin/' : '/posts/',
-      icon: <HomeIcon className='w-5 h-5' />
+      link: isAdmin ? '/admin/' : '/',
+      icon: <HomeIcon className='w-5 h-5 text-slate-600' />
     },
+    { name: 'Blog', link: '/posts/', icon: <PencilIcon className='w-5 h-5 text-slate-600' /> },
     {
       name: 'About',
       link: '/about',
-      icon: <InformationCircleIcon className='w-5 h-5' />
+      icon: <InformationCircleIcon className='w-5 h-5 text-slate-600' />
     },
   ]
   const bottomLinks: { name: string, link: string, icon: ReactElement | ReactNode }[] = compact([
     isAdmin && {
       name: 'Log Out',
       link: '/logout',
-      icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" />
+      icon: <ArrowLeftOnRectangleIcon className="w-5 h-5 text-slate-600" />
     }
   ])
 

@@ -59,7 +59,6 @@ const MainLayout: FC<MainLayoutProps> = ({
         <Group h="100%" px="md">
           <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
           <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-          <img src={logo} width={60} height={60} />
           {isAdmin && <GiOverlordHelm onClick={onClickAdminLogo} role="button" className="w-10 h-10" />}
         </Group>
 

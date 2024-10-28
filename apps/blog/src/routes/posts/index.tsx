@@ -11,10 +11,18 @@ export const Route = createFileRoute('/posts/')({
 
 
 const BlogListPage = () => {
-  const { data, loading } = useFindPostsQuery({ variables: { searchInput: { limit: 10, offset: 0, isPublished: true } } })
+
   const navigate = useNavigate()
 
   const [activeTab, setActiveTab] = useState<Category | 'ALL'>('ALL')
+  const { data, loading } = useFindPostsQuery({
+    variables: {
+      searchInput: {
+        limit: 10, offset: 0, isPublished: true,
+        ...activeTab !== 'ALL' && { category: activeTab },
+      }
+    }
+  })
   if (loading || !data?.posts) return <Loading />
 
   const posts: ComponentProps<typeof RecentPosts>['posts'] = data?.posts.map((post) => ({

@@ -173,7 +173,7 @@ const About = () => {
 
   return (
     <div className='grid py-10 place-items-center'>
-      <div className='w-3/4 mx-auto space-y-5 shadow-lg '>
+      <div className='w-full mx-auto space-y-5 shadow-lg '>
         <div className="flex gap-2 px-10">
           <div>
             <Avatar size={'xl'} className='outline outline-slate-200' src='profile.jpeg' />
