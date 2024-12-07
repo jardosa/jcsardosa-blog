@@ -145,6 +145,7 @@
     "jsdom": "~22.1.0",
     "nx": "18.2.1",
     "postcss": "8.4.21",
+    "postcss-import": "^16.1.0",
     "postcss-preset-mantine": "^1.12.3",
     "prettier": "^2.6.2",
     "storybook": "^7.2.2",
