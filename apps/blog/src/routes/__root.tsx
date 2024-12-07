@@ -69,7 +69,11 @@ const Root = () => {
     return false
   }, [location.href])
 
-  const { data } = useWhoAmIQuery()
+  const authToken = getCookie('authToken')
+
+  const { data } = useWhoAmIQuery({
+    skip: !authToken
+  })
 
   const isAdmin = data?.whoAmI?.role === Role.Admin
   const inAdminPanel = location.href.startsWith('/admin')

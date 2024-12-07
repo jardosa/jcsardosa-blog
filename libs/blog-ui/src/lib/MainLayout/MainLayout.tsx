@@ -45,17 +45,9 @@ const MainLayout: FC<MainLayoutProps> = ({
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
 
       }}
-      // aside={{
-      //   width: 300,
-      //   breakpoint: 'sm',
-      //   collapsed: {
-      //     mobile: true,
-      //   }
-
-      // }}
       padding="sm"
     >
-      <AppShell.Header withBorder={false}>
+      <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
           <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
@@ -63,7 +55,7 @@ const MainLayout: FC<MainLayoutProps> = ({
         </Group>
 
       </AppShell.Header>
-      <AppShell.Navbar withBorder={false} p="sm" >
+      <AppShell.Navbar p="sm" >
         <div className="flex flex-col justify-between flex-1">
           <div>
             {navItems}
