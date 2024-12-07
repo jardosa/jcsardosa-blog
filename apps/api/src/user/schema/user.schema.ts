@@ -1,7 +1,7 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import TimeStamps from '../../common/entities/timestamps';
+import TimeStamps from '../../common/entities/timestamps.entity';
 import Node from '../../common/entities/node.entity';
 
 export type UserDocument = HydratedDocument<User & TimeStamps>;

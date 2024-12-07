@@ -1,5 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import TimeStamps from '../../common/entities/timestamps';
+import TimeStamps from '../../common/entities/timestamps.entity';
 import Node from '../../common/entities/node.entity';
 
 @ObjectType({ implements: [Node, TimeStamps] })
