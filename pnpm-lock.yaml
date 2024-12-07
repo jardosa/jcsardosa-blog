@@ -427,6 +427,9 @@ devDependencies:
   postcss-preset-mantine:
     specifier: ^1.12.3
     version: 1.12.3(postcss@8.4.21)
+  postcss-simple-vars:
+    specifier: ^7.0.1
+    version: 7.0.1(postcss@8.4.21)
   prettier:
     specifier: ^2.6.2
     version: 2.8.8

@@ -147,6 +147,7 @@
     "postcss": "8.4.21",
     "postcss-import": "^16.1.0",
     "postcss-preset-mantine": "^1.12.3",
+    "postcss-simple-vars": "^7.0.1",
     "prettier": "^2.6.2",
     "storybook": "^7.2.2",
     "storybook-dark-mode": "^3.0.3",
